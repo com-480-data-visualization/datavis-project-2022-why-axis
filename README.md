@@ -42,7 +42,9 @@ For our EDA we’ve created several reports for our KA1 and KA3 data which spans
 | Missing Observations |       6.5% |
 | Total Observations   | 83,094,192 |
 
-![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participants_per_year.png)
+<p align="center">
+  <img height="300" src="figures/participants_per_year.png" alt="participant per year">
+</p>
 
 Observing the evolution of the total number of participants in the programme across time, we notice a clear increasing trend. Moreover, the number of participants in the academic year 2014/15 seems very low compared to others, which might suggest that the data for that year is incomplete.
 

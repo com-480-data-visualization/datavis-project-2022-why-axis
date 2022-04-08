@@ -39,8 +39,34 @@ For our EDA we’ve created several reports for our KA1 and KA3 data which spans
 | Missing Observations |       6.5% |
 | Total Observations   | 83,094,192 |
 
-The attribute that describes duration of the program is not measured in a consistent type, in some activities we find it represents the number of days, while in some the number of months.
 ![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participants_per_year.png)
+
+Observing the evolution of the total number of participants in the programme across time, we notice a clear increasing trend. Moreover, the number of participants in the academic year 2014/15 seems very low compared to others, which might suggest that the data for that year is incomplete.
+
+![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participant_profile.png)
+
+While the majority of participants, including high-school and university students, are classified as “Learners”, there is still a fair number of activities involving staff (e.g. teacher training).
+[]
+
+We also notice that there are significantly more female than male participants - around a 60-40 split.
+
+![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participant_age.png)
+
+The age distribution of participants shows a visible peak in the 18-25 which corresponds to a typical age of university students. However, there are still quite a lot of participants in the age bracket 30-60, possibly PHD/Postdoc students and academic staff.
+
+The number of distinct values for each column is presented below:<br>
+Field of Education: 168 categories<br>
+Participant Nationality: 227 categories<br>
+Participant Age: 342 categories<br>
+Sending Country Code: 163 categories<br>
+Sending City: 36351 categories<br>
+Sending Organization: 66197 categories<br>
+Sending Organisation Erasmus Code: 5187 categories<br>
+Receiving Country Code: 159 categories<br>
+Receiving City: 79432 categories<br>
+Receiving Organization: 339684 categories<br>
+Receiving Organisation Erasmus Code: 4124 categories<br>
+Note: the large number of categories in the Age column and Country Code columns hint that there might be some invalid values there (as previously mentioned).
 
 For a more detailed EDA, see our yearly reports before preprocessing. Please note that the reports are generated before our subtle preprocessing steps. They present the raw version of the data:
 1. [KA1 2014 Report](https://ka1-2014.netlify.app/)

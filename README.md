@@ -50,7 +50,9 @@ While the majority of participants, including high-school and university student
 
 We also notice that there are significantly more female than male participants - around a 60-40 split.
 
-![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participant_age.png)
+<p align="center">
+  <img height="300" src="figures/participant_age.png" alt="participant age">
+</p>
 
 The age distribution of participants shows a visible peak in the 18-25 which corresponds to a typical age of university students. However, there are still quite a lot of participants in the age bracket 30-60, possibly PHD/Postdoc students and academic staff.
 

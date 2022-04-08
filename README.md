@@ -30,7 +30,15 @@ Before we get started with the analysis, a few preprocessing steps need to be pe
 
 The attribute that describes duration of the program is not measured in a consistent type, in some activities we find it represents the number of days, while in some the number of months.
 
-
+|         Name         |    Value   |
+|:--------------------:|:----------:|
+| Rows                 |  3,462,258 |
+| Complete Rows        |      40.2% |
+| Columns              |         24 |
+| Discrete Features    |         22 |
+| Continuous Features  |          2 |
+| Missing Observations |       6.5% |
+| Total Observations   | 83,094,192 |
 
 
 For a more detailed EDA, see our yearly reports before preprocessing. Please note that the reports are generated before our subtle preprocessing steps. They present the raw version of the data:

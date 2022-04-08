@@ -19,7 +19,10 @@ We want our end product to offer the user an interactive visualization environme
 The dataset is divided into two parts corresponding to two Key Actions: KA1 and KA3. KA1 is the Erasmus+ Exchange program we’re all familiar with. KA3 on the other hand assists in the creation of new policies at the European Union and system level in the domains of education, youth development, and sport. We will focus on KA1, since our main point of interest are the student exchanges.
 
 The KA1 dataset contains 3.1 million rows, containing different types of activities, such as student exchanges (1.2 m) and traineeships (0.452 m). For activity count distribution see plot below:
-![alt text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/activity-distribution.png)
+
+<p align="center">
+  <img height="300" src="figures/activity-distribution.png" alt="activity distribution">
+</p>
 
 Before we get started with the analysis, a few preprocessing steps need to be performed, including:
 * Parsing missing values: there are multiple representations of a missing value in the dataset, including: “-”, “Undefined” and “?? Unknown”.
@@ -43,10 +46,16 @@ For our EDA we’ve created several reports for our KA1 and KA3 data which spans
 
 Observing the evolution of the total number of participants in the programme across time, we notice a clear increasing trend. Moreover, the number of participants in the academic year 2014/15 seems very low compared to others, which might suggest that the data for that year is incomplete.
 
-![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participant_profile.png)
+<p align="center">
+  <img height="300" src="figures/participant_profile.png" alt="participant profile">
+</p>
 
 While the majority of participants, including high-school and university students, are classified as “Learners”, there is still a fair number of activities involving staff (e.g. teacher training).
-![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/gender_distribution.png)
+
+<p align="center">
+  <img height="300" src="figures/gender_distribution.png" alt="gender distribution">
+</p>
+
 
 We also notice that there are significantly more female than male participants - around a 60-40 split.
 

@@ -21,7 +21,7 @@ The dataset is divided into two parts corresponding to two Key Actions: KA1 and 
 The KA1 dataset contains 3.1 million rows, containing different types of activities, such as student exchanges (1.2 m) and traineeships (0.452 m). For activity count distribution see plot below:
 
 <p align="center">
-  <img height="300" src="figures/activity-distribution.png" alt="activity distribution">
+  <img src="figures/activity-distribution.png" alt="activity distribution">
 </p>
 
 Before we get started with the analysis, a few preprocessing steps need to be performed, including:

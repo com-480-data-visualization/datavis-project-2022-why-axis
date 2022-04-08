@@ -32,7 +32,7 @@ Before we get started with the analysis, a few preprocessing steps need to be pe
 * Establishing a strategy of dealing with missing values, since majority of the rows in the dataset contain at least one missing value.
 
 For our EDA we’ve created several reports for our KA1 and KA3 data which spans five consecutive years. A summary of our dataset is as follows:
-<table><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Rows</td><td>3,462,258</td></tr><tr><td>Complete Rows</td><td>40.2%</td></tr><tr><td>Columns</td><td>24</td></tr><tr><td>Discrete Features</td><td>22</td></tr><tr><td>Continuous Features</td><td>2</td></tr><tr><td>Missing Observations</td><td>6.5%</td></tr><tr><td>Total Observations</td><td>83,094,192</td></tr></tbody></table>
+<table align="center"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Rows</td><td>3,462,258</td></tr><tr><td>Complete Rows</td><td>40.2%</td></tr><tr><td>Columns</td><td>24</td></tr><tr><td>Discrete Features</td><td>22</td></tr><tr><td>Continuous Features</td><td>2</td></tr><tr><td>Missing Observations</td><td>6.5%</td></tr><tr><td>Total Observations</td><td>83,094,192</td></tr></tbody></table>
 
 <p align="center">
   <img height="300" src="figures/participants_per_year.png" alt="participant per year">

@@ -46,7 +46,7 @@ Observing the evolution of the total number of participants in the programme acr
 ![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participant_profile.png)
 
 While the majority of participants, including high-school and university students, are classified as “Learners”, there is still a fair number of activities involving staff (e.g. teacher training).
-[]
+![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/gender_distribution.png)
 
 We also notice that there are significantly more female than male participants - around a 60-40 split.
 

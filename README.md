@@ -19,17 +19,16 @@ We want our end product to offer the user an interactive visualization environme
 The dataset is divided into two parts corresponding to two Key Actions: KA1 and KA3. KA1 is the Erasmus+ Exchange program we’re all familiar with. KA3 on the other hand assists in the creation of new policies at the European Union and system level in the domains of education, youth development, and sport. We will focus on KA1, since our main point of interest are the student exchanges.
 
 The KA1 dataset contains 3.1 million rows, containing different types of activities, such as student exchanges (1.2 m) and traineeships (0.452 m). For activity count distribution see plot below:
-[images/]
+![alt text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/activity-distribution.png)
 
 Before we get started with the analysis, a few preprocessing steps need to be performed, including:
 * Parsing missing values: there are multiple representations of a missing value in the dataset, including: “-”, “Undefined” and “?? Unknown”.
 * Removing outliers and invalid entries, e.g. negative/very large age
 * Normalizing the values, e.g. some durations are expressed in months, some in days
 * Dealing with duplicate entries, e.g. there are multiple labels for some institutions, e.g. consider EPFL and Ecole Polytechnique Fédérale de Lausanne
-* Establishing a strategy of dealing with missing values, since majority of the rows in the dataset contain 
+* Establishing a strategy of dealing with missing values, since majority of the rows in the dataset contain at least one missing value
 
-The attribute that describes duration of the program is not measured in a consistent type, in some activities we find it represents the number of days, while in some the number of months.
-
+For our EDA we’ve created several reports for our KA1 and KA3 data which spans five consecutive years. A summary of our dataset is as follows:
 |         Name         |    Value   |
 |:--------------------:|:----------:|
 | Rows                 |  3,462,258 |
@@ -40,6 +39,8 @@ The attribute that describes duration of the program is not measured in a consis
 | Missing Observations |       6.5% |
 | Total Observations   | 83,094,192 |
 
+The attribute that describes duration of the program is not measured in a consistent type, in some activities we find it represents the number of days, while in some the number of months.
+![alt_text](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/figures/participants_per_year.png)
 
 For a more detailed EDA, see our yearly reports before preprocessing. Please note that the reports are generated before our subtle preprocessing steps. They present the raw version of the data:
 1. [KA1 2014 Report](https://ka1-2014.netlify.app/)

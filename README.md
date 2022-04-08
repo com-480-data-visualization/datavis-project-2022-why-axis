@@ -28,7 +28,7 @@ Before we get started with the analysis, a few preprocessing steps need to be pe
 * Parsing missing values: there are multiple representations of a missing value in the dataset, including: “-”, “Undefined” and “?? Unknown”.
 * Removing outliers and invalid entries, e.g. negative/very large age.
 * Normalizing the values, e.g. some durations are expressed in months, some in days.
-* Dealing with duplicate entries, e.g. there are multiple labels for some institutions, e.g. consider EPFL and Ecole Polytechnique Fédérale de Lausanne
+* Dealing with duplicate entries, e.g. there are multiple labels for some institutions, e.g. consider EPFL and Ecole Polytechnique Fédérale de Lausanne.
 * Establishing a strategy of dealing with missing values, since majority of the rows in the dataset contain at least one missing value.
 
 For our EDA we’ve created several reports for our KA1 and KA3 data which spans five consecutive years. A summary of our dataset is as follows:

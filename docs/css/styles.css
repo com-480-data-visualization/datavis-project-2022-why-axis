@@ -98,22 +98,22 @@
     /* color-1(#F9A828)
      * color-2(#07617D)
      */
-    --color-1 : hsla(37, 95%, 57%, 1);
-    --color-2 : hsla(194, 89%, 26%, 1);
+    --color-1 : hsla(49, 92%, 55%, 1);
+    --color-2 : hsla(223, 67%, 17%, 1);
 
     /* theme color variations
      */
-    --color-1-lighter : hsla(37, 95%, 77%, 1);
-    --color-1-light   : hsla(37, 95%, 67%, 1);
-    --color-1-dark    : hsla(37, 95%, 47%, 1);
-    --color-1-darker  : hsla(37, 95%, 37%, 1);
-    --color-2-lighter : hsla(194, 89%, 46%, 1);
-    --color-2-light   : hsla(194, 89%, 36%, 1);
-    --color-2-dark    : hsla(194, 89%, 16%, 1);
-    --color-2-darker  : hsla(194, 89%, 10%, 1);
+    --color-1-lighter : hsla(49, 92%, 75%, 1);
+    --color-1-light   : hsla(49, 92%, 65%, 1);
+    --color-1-dark    : hsla(49, 92%, 45%, 1);
+    --color-1-darker  : hsla(49, 92%, 35%, 1);
+    --color-2-lighter : hsla(223, 67%, 37%, 1);
+    --color-2-light   : hsla(223, 67%, 27%, 1);
+    --color-2-dark    : hsla(223, 67%, 12%, 1);
+    --color-2-darker  : hsla(223, 67%, 7%, 1);
 
     /* feedback colors
-     * color-error(#ffd1d2), color-success(#c8e675), 
+     * color-error(#ffd1d2), color-success(#c8e675),
      * color-info(#d7ecfb), color-notice(#fff099)
      */
     --color-error                  : hsla(359, 100%, 91%, 1);
@@ -125,9 +125,9 @@
     --color-info-content           : hsla(205, 32%, 31%, 1);
     --color-notice-content         : hsla(51, 30%, 30%, 1);
 
-    /* shades 
-     * generated using 
-     * Tint & Shade Generator 
+    /* shades
+     * generated using
+     * Tint & Shade Generator
      * (https://maketintsandshades.com/)
      */
     --color-black                  : #000000;

@@ -256,12 +256,12 @@
                             </span>
 
                         <div class="service-content">
-                            <h3 class="h4"><a href="#visualization-two" class="reversed">Universities Bubble Plot</a>
+                            <h3 class="h4"><a href="#visualization-two" class="reversed">Universities Bubble Cloud</a>
                             </h3>
 
                             <p>
                                 To explore which universities are in Erasmus mobility exchanges and with how many
-                                participants we use a bubble plot. Each university is represented as a coloured bubble,
+                                participants we use a bubble cloud. Each university is represented as a coloured bubble,
                                 while the size of the bubble is determined by the page rank of the university. This rank
                                 is calculated based on incoming and outgoing students, averaged for the 6 years of the
                                 program.
@@ -306,7 +306,7 @@
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Erasmus Map</h2>
 
-                    <div class="visualization">
+                    <div class="visualization" data-animate-el>
                         <svg id="erasmus-map" width="800" height="600"></svg>
                     </div>
                 </div> <!-- end column -->
@@ -318,7 +318,7 @@
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Country Relationship Diagram</h2>
 
-                    <div class="visualization">
+                    <div class="visualization" data-animate-el>
                         <svg id="chord-diagram" width="600" height="600"></svg>
                     </div>
                 </div> <!-- end column -->
@@ -326,7 +326,7 @@
         </section>
 
         <section id="visualization-three" class="s-visualization">
-            <div class="row visualizations">
+            <div class="row visualizations" data-animate-el>
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Education Field Yearly Stream</h2>
 
@@ -338,12 +338,12 @@
         </section>
 
         <section id="visualization-four" class="s-visualization__dark">
-            <div class="row visualizations__dark">
+            <div class="row visualizations__dark" data-animate-el>
                 <div class="column lg-12" data-animate-block>
-                    <h2 class="text-pretitle" data-animate-el>Universities Bubble Plot</h2>
+                    <h2 class="text-pretitle" data-animate-el>Universities Bubble Cloud</h2>
 
                     <div class="visualization">
-                        <div id="bubble-chart"></div>
+                        <div id="bubble-cloud"></div>
                     </div>
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
@@ -507,7 +507,7 @@
 <script src="js/map-visualization.js"></script>
 <script src="js/chord-diagram-visualization.js"></script>
 <script src="js/stacked-chart-visualization.js"></script>
-<script src="js/bubble-chart-visualization.js"></script>
+<script src="js/bubble-cloud-visualization.js"></script>
 
 </body>
 </html>

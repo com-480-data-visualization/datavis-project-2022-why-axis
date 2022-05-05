@@ -24,7 +24,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     const keys = data.columns.slice(1)
 
     // color palette
-    const color = d3.scaleOrdinal()
+    const stacked_chart_color = d3.scaleOrdinal()
         .domain(keys)
         .range(d3.schemeSet2);
 
@@ -105,7 +105,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .data(stackedData)
         .join("path")
         .attr("class", function(d) { return "myArea " + d.key })
-        .style("fill", function(d) { return color(d.key); })
+        .style("fill", function(d) { return stacked_chart_color(d.key); })
         .attr("d", area)
 
     // Add the brushing
@@ -173,7 +173,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .attr("y", function(d,i){ return 10 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
         .attr("width", size)
         .attr("height", size)
-        .style("fill", function(d){ return color(d)})
+        .style("fill", function(d){ return stacked_chart_color(d)})
         .on("mouseover", highlight)
         .on("mouseleave", noHighlight)
 
@@ -183,7 +183,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .join("text")
         .attr("x", 660 + size*1.2)
         .attr("y", function(d,i){ return 10 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
-        .style("fill", function(d){ return color(d)})
+        .style("fill", function(d){ return stacked_chart_color(d)})
         .text(function(d){ return d})
         .attr("text-anchor", "left")
         .style("alignment-baseline", "middle")

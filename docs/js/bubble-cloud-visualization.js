@@ -15,7 +15,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     data = data.filter(function(d){ return d.value>10000000 })
 
     // Color palette for continents?
-    const color = d3.scaleOrdinal()
+    const bubble_cloud_color = d3.scaleOrdinal()
         .domain(["Asia", "Europe", "Africa", "Oceania", "Americas"])
         .range(d3.schemeSet1);
 
@@ -60,7 +60,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .attr("r", d => size(d.value))
         .attr("cx", bubble_cloud_width / 2)
         .attr("cy", bubble_cloud_height / 2)
-        .style("fill", d => color(d.region))
+        .style("fill", d => bubble_cloud_color(d.region))
         .style("fill-opacity", 0.8)
         .attr("stroke", "black")
         .style("stroke-width", 1)

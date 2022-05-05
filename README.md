@@ -14,7 +14,8 @@
 
 ## Milestone 2
 
-Milestone 2 report: [add when finalized]
+[Milestone 2 report](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/milestone2.pdf)
+
 Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
 
 ## Milestone 3

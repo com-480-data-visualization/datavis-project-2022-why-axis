@@ -1,65 +1,124 @@
 const json_path = "data/viz2.json"
-const colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
-const innerRadius = 360
-const outerRadius = 380
 
-$.getJSON(json_path, function(data) {
-    const matrix = data["matrix"]
-    const labels = data["labels"]
+function chordAlt(matrix, names) {
+    const innerRadius = 320
+    const outerRadius = 330
+    const ySpacing = 25
+    const xOffset = 380
+    const radius = 8
 
-    chordDiagram(matrix, labels)
-});
 
-function chordDiagram(matrix, labels) {
-    // create the svg area
+    function yDot(d, i) {
+        return +(i - names.length / 2) * ySpacing
+    }
+
+    function yLabel(d, i) {
+        return +(i - names.length / 2) * ySpacing + 2
+    }
+
+    function onMouseOver(selected) {
+        group
+            .filter(d => d.index !== selected.index)
+            .style("opacity", 0.3);
+
+        svg.selectAll(".chord")
+            .filter(d => d.source.index !== selected.index)
+            .style("opacity", 0.3);
+        console.log("hi")
+    }
+
+    function onMouseOut() {
+        group.style("opacity", 1);
+        svg.selectAll(".chord")
+            .style("opacity", 1);
+        console.log("hi")
+    }
+
+    console.log(matrix)
+    console.log(names)
+
     const chordArea = document.getElementById("chord-diagram")
     const height = chordArea.getAttribute("height")
     const width = chordArea.getAttribute("width")
-    console.log(chordArea)
-    const chord_diagram = d3.select("#chord-diagram").append("g").attr("transform", `translate(${height/2},${width/2})`)
-    const res = d3.chord()
-    .padAngle(0.01)     // padding between entities (black arc)
-    .sortSubgroups(d3.descending)
-    (matrix)
+    const svg = d3.select("#chord-diagram").append("g").attr("transform", `translate(${width / 2.5},${height / 2})`)
 
-    // based on https://d3-graph-gallery.com/graph/chord_basic.html
-    // add the groups on the inner part of the circle
-    chord_diagram
-        .datum(res)
-        .append("g")
+    var color = d3.scaleOrdinal()
+        .domain(names)
+        .range(d3.schemeSet2);
+
+    chord = d3.chordDirected().padAngle(5 / innerRadius).sortSubgroups(d3.descending)
+    ribbon = d3.ribbonArrow().radius(innerRadius - 0.5).padAngle(1 / innerRadius)
+    arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
+    const chords = chord(matrix);
+
+    formatValue = x => `: ${x.toFixed(0)} students`
+
+    const group = svg.append("g")
+    .selectAll("g")
+    .data(chords.groups)
+    .join("g");
+
+    svg.append("g")
+        .attr("fill-opacity", 0.75)
         .selectAll("g")
-        .data(d => d.groups)
-        .join("g")
-        .append("path")
-        .style("fill", "grey")
-        .style("stroke", "black")
-        .attr("d", d3.arc()
-            .innerRadius(innerRadius)
-            .outerRadius(outerRadius)
-        )
-
-    chord_diagram.append("path")
-      .attr("fill", "none")
-      .attr("d", d3.arc()({outerRadius, startAngle: 0, endAngle: 2 * Math.PI}));
-
-    // // Add the links between groups
-    chord_diagram
-        .datum(res)
-        .append("g")
-        .selectAll("path")
-        .data(d => d)
+        .data(chords)
         .join("path")
-        .attr("d", d3.ribbon()
-            .radius(innerRadius - 10)
-        )
-        .style("fill", function(d){ return(colors[d.source.index]) })
+        .attr("d", ribbon)
+        .attr("fill", d => color(names[d.source.index]))
+        .style("mix-blend-mode", "multiply")
+        .append("title")
+        .text(d => `${names[d.source.index]} to ${names[d.target.index]} ${formatValue(d.source.value)}`)
+
+    svg.append("g")
+        .attr("font-family", "Helvetica")
+        .attr("font-size", 10)
+        .selectAll("g")
+        .data(chords.groups)
+        .join("g")
+        .call(g => g.append("path")
+            .attr("d", arc)
+            .attr("fill", d => color(names[d.index]))
+            .attr("stroke", "#fff"))
+        .call(g => g.append("title")
+            .text(d => `${names[d.index]}
+        from ${formatValue(d3.sum(matrix[d.index]))}
+        to ${formatValue(d3.sum(matrix, row => row[d.index]))}`));
+
+    // add legend
+    // https://d3-graph-gallery.com/graph/custom_legend.html
+    svg.selectAll("legend-dots")
+        .data(names)
+        .enter()
+        .append("circle")
+        .attr("cx", xOffset)
+        .attr("cy", yDot)
+        .attr("r", radius)
+        .style("fill", function (d) {
+            return color(d)
+        })
+
+    svg.selectAll("legend-labels")
+        .data(names)
+        .enter()
+        .append("text")
+        .attr("font-family", "monospace")
+        .attr("font-size", 12)
+        .attr("x", xOffset + 20)
+        .attr("y", yLabel)
+        .style("fill", function (d) {
+            return color(d)
+        })
+        .text(function (d) {
+            return d
+        })
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
 }
+
+$.getJSON(json_path, function (data) {
+    const matrix = data["matrix"]
+    const labels = data["labels"]
+
+    // chordDiagram(matrix, labels)
+    chordAlt(matrix, labels)
+});

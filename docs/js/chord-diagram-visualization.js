@@ -1,124 +1,116 @@
-const json_path = "data/viz2.json"
+var path = ""
 
-function chordAlt(matrix, names) {
+function chord(matrix, names) {
     const innerRadius = 320
-    const outerRadius = 330
-    const ySpacing = 25
-    const xOffset = 380
-    const radius = 8
+    const outerRadius = 350
 
+    // mouse events adapted from https://observablehq.com/@john-guerra/mouseover-chord-diagram
 
-    function yDot(d, i) {
-        return +(i - names.length / 2) * ySpacing
+    function onMouseOverPath(selected) {
+        const indexFrom = selected.path[0].__data__["source"]["index"]
+        const indexTo = selected.path[0].__data__["target"]["index"]
+        const value = selected.path[0].__data__["source"]["value"]
+
+        svg.selectAll(".chordpath")
+            .filter(d => d.source.index !== indexFrom).transition().style("opacity", 0.3);
+
+        tooltip.text(`${names[indexFrom]} to ${names[indexTo]}: ${value} students`)
+
+        tooltip.style("visibility", "visible");
     }
 
-    function yLabel(d, i) {
-        return +(i - names.length / 2) * ySpacing + 2
+    function onMouseMove(selected) {
+        var coordinates = d3.pointer(selected)
+        const x = coordinates[0]
+        const y = coordinates[1] + height / 2 - 10
+        tooltip.style("top", (y + "px")).style("left", (x + "px")).transition()
     }
 
-    function onMouseOver(selected) {
-        group
-            .filter(d => d.index !== selected.index)
+    function onMouseOverGroup(selected) {
+        // i don't know what's a better way to get that index?
+        const index = selected.path[0].__data__['index']
+        svg.selectAll(".chordpath")
+            .filter(d => d.source.index !== index).transition()
             .style("opacity", 0.3);
 
-        svg.selectAll(".chord")
-            .filter(d => d.source.index !== selected.index)
-            .style("opacity", 0.3);
-        console.log("hi")
+        tooltip.text(`${names[index]}: out: ${d3.sum(matrix[index])}, in: ${d3.sum(matrix, row => row[index])}`)
+        tooltip.style("visibility", "visible");
     }
 
     function onMouseOut() {
-        group.style("opacity", 1);
-        svg.selectAll(".chord")
+        svg.selectAll(".chordpath").transition()
             .style("opacity", 1);
-        console.log("hi")
+        tooltip.style("visibility", "hidden");
     }
 
-    console.log(matrix)
-    console.log(names)
 
     const chordArea = document.getElementById("chord-diagram")
     const height = chordArea.getAttribute("height")
     const width = chordArea.getAttribute("width")
-    const svg = d3.select("#chord-diagram").append("g").attr("transform", `translate(${width / 2.5},${height / 2})`)
+    const svg = d3.select("#chord-diagram").append("g").attr("transform", `translate(${width / 2},${height / 2})`)
+
+    // tooltip based on https://codepen.io/DuliniM/pen/YqLqrL
+    var tooltip = d3.select("#tooltip");
 
     var color = d3.scaleOrdinal()
         .domain(names)
-        .range(d3.schemeSet2);
+        .range(d3.schemeTableau10);
 
     chord = d3.chordDirected().padAngle(5 / innerRadius).sortSubgroups(d3.descending)
-    ribbon = d3.ribbonArrow().radius(innerRadius - 0.5).padAngle(1 / innerRadius)
+    ribbon = d3.ribbonArrow().radius(innerRadius - 10).padAngle(1 / innerRadius)
     arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
     const chords = chord(matrix);
 
-    formatValue = x => `: ${x.toFixed(0)} students`
-
+    // add groups
     const group = svg.append("g")
-    .selectAll("g")
-    .data(chords.groups)
-    .join("g");
+        .selectAll("g")
+        .data(chords.groups)
+        .join("g");
 
+    group.append("text")
+        .each(d => {
+            d.angle = (d.startAngle + d.endAngle) / 2;
+        })
+        .attr("dy", ".35em")
+        .attr("font-family", "Helvetica")
+        .attr("font-size", 15)
+        .attr("fill", color)
+        .attr("transform", d => `
+        rotate(${(d.angle * 180 / Math.PI) - 90})
+        translate(${outerRadius + 26})
+        ${d.angle > Math.PI ? "rotate(180)" : ""}
+      `)
+        .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+        .text(d => names[d.index]);
+
+    // add paths
     svg.append("g")
         .attr("fill-opacity", 0.75)
         .selectAll("g")
         .data(chords)
         .join("path")
         .attr("d", ribbon)
+        .on("mouseover", onMouseOverPath)
+        .on("mouseout", onMouseOut)
+        .on("mousemove", onMouseMove)
+        .attr("class", "chordpath")
         .attr("fill", d => color(names[d.source.index]))
         .style("mix-blend-mode", "multiply")
-        .append("title")
-        .text(d => `${names[d.source.index]} to ${names[d.target.index]} ${formatValue(d.source.value)}`)
 
-    svg.append("g")
-        .attr("font-family", "Helvetica")
-        .attr("font-size", 10)
-        .selectAll("g")
-        .data(chords.groups)
-        .join("g")
-        .call(g => g.append("path")
-            .attr("d", arc)
-            .attr("fill", d => color(names[d.index]))
-            .attr("stroke", "#fff"))
-        .call(g => g.append("title")
-            .text(d => `${names[d.index]}
-        from ${formatValue(d3.sum(matrix[d.index]))}
-        to ${formatValue(d3.sum(matrix, row => row[d.index]))}`));
-
-    // add legend
-    // https://d3-graph-gallery.com/graph/custom_legend.html
-    svg.selectAll("legend-dots")
-        .data(names)
-        .enter()
-        .append("circle")
-        .attr("cx", xOffset)
-        .attr("cy", yDot)
-        .attr("r", radius)
-        .style("fill", function (d) {
-            return color(d)
-        })
-
-    svg.selectAll("legend-labels")
-        .data(names)
-        .enter()
-        .append("text")
-        .attr("font-family", "monospace")
-        .attr("font-size", 12)
-        .attr("x", xOffset + 20)
-        .attr("y", yLabel)
-        .style("fill", function (d) {
-            return color(d)
-        })
-        .text(function (d) {
-            return d
-        })
-        .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
+    group.append("path")
+        .attr("fill", d => color(names[d.index]))
+        .attr("stroke", "#fff")
+        .attr("d", arc)
+        .on("mouseover", onMouseOverGroup)
+        .on("mouseout", onMouseOut)
+        .on("mousemove", onMouseMove)
 }
 
+const json_path = "data/viz2.json"
 $.getJSON(json_path, function (data) {
+
     const matrix = data["matrix"]
     const labels = data["labels"]
 
-    // chordDiagram(matrix, labels)
-    chordAlt(matrix, labels)
+    chord(matrix, labels)
 });

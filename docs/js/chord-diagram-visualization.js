@@ -1,44 +1,116 @@
-// create the svg area
-const chord_diagram = d3.select("#chord-diagram").append("g").attr("transform", "translate(300, 300)")
+var path = ""
 
-// create input data: a square matrix that provides flow between entities
-const matrix = [
-    [11975, 5871, 8916, 2868],
-    [1951, 10048, 2060, 6171],
-    [8010, 16145, 8090, 8045],
-    [1013, 990, 940, 6907]
-];
+function chord(matrix, names) {
+    const innerRadius = 320
+    const outerRadius = 350
 
-// give this matrix to d3.chord(): it will calculate all the info we need to draw arc and ribbon
-const res = d3.chord()
-    .padAngle(0.05)     // padding between entities (black arc)
-    .sortSubgroups(d3.descending)
-    (matrix)
+    // mouse events adapted from https://observablehq.com/@john-guerra/mouseover-chord-diagram
 
-// add the groups on the inner part of the circle
-chord_diagram
-    .datum(res)
-    .append("g")
-    .selectAll("g")
-    .data(d => d.groups)
-    .join("g")
-    .append("path")
-    .style("fill", "grey")
-    .style("stroke", "black")
-    .attr("d", d3.arc()
-        .innerRadius(200)
-        .outerRadius(210)
-    )
+    function onMouseOverPath(selected) {
+        const indexFrom = selected.path[0].__data__["source"]["index"]
+        const indexTo = selected.path[0].__data__["target"]["index"]
+        const value = selected.path[0].__data__["source"]["value"]
 
-// Add the links between groups
-chord_diagram
-    .datum(res)
-    .append("g")
-    .selectAll("path")
-    .data(d => d)
-    .join("path")
-    .attr("d", d3.ribbon()
-        .radius(200)
-    )
-    .style("fill", "#69b3a2")
-    .style("stroke", "black");
+        svg.selectAll(".chordpath")
+            .filter(d => d.source.index !== indexFrom).transition().style("opacity", 0.3);
+
+        tooltip.text(`${names[indexFrom]} to ${names[indexTo]}: ${value} students`)
+
+        tooltip.style("visibility", "visible");
+    }
+
+    function onMouseMove(selected) {
+        var coordinates = d3.pointer(selected)
+        const x = coordinates[0]
+        const y = coordinates[1] + height / 2 - 10
+        tooltip.style("top", (y + "px")).style("left", (x + "px")).transition()
+    }
+
+    function onMouseOverGroup(selected) {
+        // i don't know what's a better way to get that index?
+        const index = selected.path[0].__data__['index']
+        svg.selectAll(".chordpath")
+            .filter(d => d.source.index !== index).transition()
+            .style("opacity", 0.3);
+
+        tooltip.text(`${names[index]}: out: ${d3.sum(matrix[index])}, in: ${d3.sum(matrix, row => row[index])}`)
+        tooltip.style("visibility", "visible");
+    }
+
+    function onMouseOut() {
+        svg.selectAll(".chordpath").transition()
+            .style("opacity", 1);
+        tooltip.style("visibility", "hidden");
+    }
+
+
+    const chordArea = document.getElementById("chord-diagram")
+    const height = chordArea.getAttribute("height")
+    const width = chordArea.getAttribute("width")
+    const svg = d3.select("#chord-diagram").append("g").attr("transform", `translate(${width / 2},${height / 2})`)
+
+    // tooltip based on https://codepen.io/DuliniM/pen/YqLqrL
+    var tooltip = d3.select("#tooltip");
+
+    var color = d3.scaleOrdinal()
+        .domain(names)
+        .range(d3.schemeTableau10);
+
+    chord = d3.chordDirected().padAngle(5 / innerRadius).sortSubgroups(d3.descending)
+    ribbon = d3.ribbonArrow().radius(innerRadius - 10).padAngle(1 / innerRadius)
+    arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
+    const chords = chord(matrix);
+
+    // add groups
+    const group = svg.append("g")
+        .selectAll("g")
+        .data(chords.groups)
+        .join("g");
+
+    group.append("text")
+        .each(d => {
+            d.angle = (d.startAngle + d.endAngle) / 2;
+        })
+        .attr("dy", ".35em")
+        .attr("font-family", "Helvetica")
+        .attr("font-size", 15)
+        .attr("fill", color)
+        .attr("transform", d => `
+        rotate(${(d.angle * 180 / Math.PI) - 90})
+        translate(${outerRadius + 26})
+        ${d.angle > Math.PI ? "rotate(180)" : ""}
+      `)
+        .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+        .text(d => names[d.index]);
+
+    // add paths
+    svg.append("g")
+        .attr("fill-opacity", 0.75)
+        .selectAll("g")
+        .data(chords)
+        .join("path")
+        .attr("d", ribbon)
+        .on("mouseover", onMouseOverPath)
+        .on("mouseout", onMouseOut)
+        .on("mousemove", onMouseMove)
+        .attr("class", "chordpath")
+        .attr("fill", d => color(names[d.source.index]))
+        .style("mix-blend-mode", "multiply")
+
+    group.append("path")
+        .attr("fill", d => color(names[d.index]))
+        .attr("stroke", "#fff")
+        .attr("d", arc)
+        .on("mouseover", onMouseOverGroup)
+        .on("mouseout", onMouseOut)
+        .on("mousemove", onMouseMove)
+}
+
+const json_path = "data/viz2.json"
+$.getJSON(json_path, function (data) {
+
+    const matrix = data["matrix"]
+    const labels = data["labels"]
+
+    chord(matrix, labels)
+});

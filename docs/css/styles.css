@@ -4483,3 +4483,19 @@ img.u-pull-left {
         display : none;
     }
 }
+
+/*Tooltip for viz2*/
+#tooltip {
+  font-family: monospace;
+  visibility: hidden;
+  position: relative;
+  background-color: #333;
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 10;
+  color: white;
+  font-size: 12px;
+  display: inline-block;
+  border: 1px solid #ffffff;
+  opacity: 0.9;
+}

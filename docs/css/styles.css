@@ -4499,3 +4499,23 @@ img.u-pull-left {
   border: 1px solid #ffffff;
   opacity: 0.9;
 }
+
+/*Tooltip for viz1*/
+#tooltip-map {
+    font-family: monospace;
+    visibility: hidden;
+    position: relative;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 5px;
+    z-index: 10;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    border: 1px solid #ffffff;
+    opacity: 0.9;
+  }
+
+  .checkboxes input {
+    vertical-align: middle;
+  }

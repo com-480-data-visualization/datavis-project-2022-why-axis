@@ -308,9 +308,26 @@
             <div class="row visualizations">
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Erasmus Map</h2>
-
+                    <div id="tooltip-map"></div>
                     <div class="visualization" data-animate-el>
                         <svg id="erasmus-map" width="800" height="600"></svg>
+                    </div>
+                    <div class="row align-items-left" style="padding: 20px">Gender<br>
+                        <input type="checkbox" id="cb-female" name="female" value="Female" checked="true" style="padding: 20px">
+                        <label for="female">Female</label>
+                        <input type="checkbox" id="cb-male" name="male" value="Male" checked="true" style="padding: 20px">
+                        <label for="male">Male</label>
+                    </div>
+                    <div class="row align-items-left">Program Type<br>
+                        <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true">
+                        <label for="sending">Sending</label>
+                        <input type="checkbox" id="cb-receiving" name="receiving" value="Receiving" checked="true">
+                        <label for="receiving">Receiving</label>
+                    </div>
+                    <h5>Academic Year</h5>
+                    <div class="row align-items-left">
+                        <div class="col-sm-2"><p id="value-time"></p></div>
+                        <div class="col-sm"><div id="slider-time"></div></div>
                     </div>
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->

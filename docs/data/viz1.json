@@ -2083,15 +2083,15 @@
     "Yearly-Data":[
       {
         "Academic Year":"2019-2020",
-        "Sending-Female":null,
-        "Sending-Male":null,
-        "Sending-All":null,
+        "Sending-Female":0.0,
+        "Sending-Male":0.0,
+        "Sending-All":0.0,
         "Receiving-Female":16,
         "Receiving-Male":9,
         "Receiving-All":25,
-        "All-Female":null,
-        "All-Male":null,
-        "All-All":null
+        "All-Female":16.0,
+        "All-Male":9.0,
+        "All-All":25.0
       }
     ]
   },

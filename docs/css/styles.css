@@ -4486,6 +4486,7 @@ img.u-pull-left {
 
 /*Tooltip for viz2*/
 #tooltip {
+    height: 0;
   font-family: monospace;
   visibility: hidden;
   position: relative;
@@ -4500,7 +4501,13 @@ img.u-pull-left {
   opacity: 0.9;
 }
 
-/*Tooltip for viz1*/
+.label {
+  font-family: "Lora", "Serif";
+  font-size: 15px;
+  text-rendering : optimizeLegibility;
+  color: white;
+}
+
 #tooltip-map {
     font-family: monospace;
     visibility: hidden;

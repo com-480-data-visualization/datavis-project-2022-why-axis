@@ -5,7 +5,6 @@ function map(data) {
         erasmus_map_height = +erasmus_map_svg.attr("height");
 
     // Map and projection
-    const erasmus_map_path = d3.geoPath();
     const erasmus_map_projection = d3.geoMercator()
         .scale(660)
         .center([14, 48])
@@ -14,53 +13,48 @@ function map(data) {
     // Data and color scale
     const erasmus_map_data = new Map();
 
-    document.getElementById('cb-female').addEventListener('change', _ => updateColors());
-    document.getElementById('cb-male').addEventListener('change', _ => updateColors());
-    document.getElementById('cb-sending').addEventListener('change', _ => updateColors());
-    document.getElementById('cb-receiving').addEventListener('change', _ => updateColors());
+    // Adding event listeners to checkbox-es and drop-down list of education level
+    document.getElementById('cb-female').addEventListener('change', _ => update_colors_and_values());
+    document.getElementById('cb-male').addEventListener('change', _ => update_colors_and_values());
+    document.getElementById('cb-sending').addEventListener('change', _ => update_colors_and_values());
+    document.getElementById('cb-receiving').addEventListener('change', _ => update_colors_and_values());
+    document.getElementById('education-level').addEventListener('change', _ => update_colors_and_values());
 
-    function updateColors() {
-        var year = sliderStep.value();
+    // Global map where key is the country, value is participants count based on current selections
+    var country_participants_values = new Map();
+
+    // Function that updates colors and participants nubmer for current selection of filters
+    function update_colors_and_values() {
         const cb_female = $("#cb-female").is(":checked");
         const cb_male = $("#cb-male").is(":checked");
         const cb_sending = $("#cb-sending").is(":checked");
         const cb_receiving = $("#cb-receiving").is(":checked");
+        const year = sliderStep.value();
+        const education_level = document.getElementById('education-level').value
 
-        var maxCount = 0;
-        var participants = 0
-        var countryParticipants = new Map();
+        var maxCount = 0
         for (var i = 0; i < data.length; i++) {
-            var obj = data[i];
-            var index = -1;
+            var obj = data[i]
+            var participants = 0
             for (var j = 0; j < obj["Yearly-Data"].length; j++) {
-                if (obj["Yearly-Data"][j]["Academic Year"].startsWith(year)) {
-                    index = j;
-                    break;
+                if (obj["Yearly-Data"][j]["Academic Year"].startsWith(year) &&
+                    (education_level == 'All' || (obj["Yearly-Data"][j]["Education Level"].startsWith(education_level))) &&
+                    ((cb_female && obj["Yearly-Data"][j]["Participant Gender"] == 'Female') || (cb_male && obj["Yearly-Data"][j]["Participant Gender"] == 'Male'))) {
+                    if (cb_sending) participants += obj["Yearly-Data"][j]["Sending"];
+                    if (cb_receiving) participants += obj["Yearly-Data"][j]["Receiving"];
                 }
             }
-            if (index == -1) continue;
-
-            year = obj["Yearly-Data"][index]["Academic Year"];
-            if (cb_sending && cb_receiving && cb_female && cb_male) participants = obj["Yearly-Data"][index]["All-All"];
-            else if (cb_sending && cb_receiving && cb_male) participants = obj["Yearly-Data"][index]["All-Male"];
-            else if (cb_sending && cb_receiving & cb_female) participants = obj["Yearly-Data"][index]["All-Female"];
-            else if (cb_receiving && cb_female && cb_male) participants = obj["Yearly-Data"][index]["Receiving-All"];
-            else if (cb_sending && cb_female && cb_male) participants = obj["Yearly-Data"][index]["Sending-All"];
-            else if (cb_sending && cb_female) participants = obj["Yearly-Data"][index]["Sending-Female"];
-            else if (cb_sending && cb_male) participants = obj["Yearly-Data"][index]["Sending-Male"];
-            else if (cb_receiving & cb_female) participants = obj["Yearly-Data"][index]["Receiving-Female"];
-            else if (cb_receiving && cb_male) participants = obj["Yearly-Data"][index]["Receiving-Male"];
             if (participants > maxCount) maxCount = participants;
-            countryParticipants.set(obj["Country"], participants);
+            country_participants_values.set(obj["Country"], participants);
         }
-        for (const entry of countryParticipants.entries()) {
+        for (const entry of country_participants_values.entries()) {
             const text = "[country_name=\'" + entry[0] + "\']"
             var country = $("#erasmus-map").find(text)[0]
             if (country != undefined) country.style.fill = d3.interpolateRdBu((0.5 + (entry[1] / maxCount) / 2));
         }
     }
 
-    // Slider Step (https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518)
+    // Slider Step that represents Academic Year (taken from - https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518)
     var sliderData = [2014, 2015, 2016, 2017, 2018, 2019];
     var sliderStep = d3
         .sliderBottom()
@@ -73,7 +67,7 @@ function map(data) {
         .default(sliderData[0])
         .on('onchange', val => {
             d3.select('p#value-step').text(d3.format("d")(val));
-            updateColors();
+            update_colors_and_values();
         });
     var gStep = d3
         .select('div#slider-step')
@@ -126,41 +120,25 @@ function map(data) {
             }
 
             let mouseMove = function (d) {
+                update_colors_and_values();
+
                 const name = d.path[0].__data__["properties"]["name"]
                 const cb_female = $("#cb-female").is(":checked");
                 const cb_male = $("#cb-male").is(":checked");
                 const cb_sending = $("#cb-sending").is(":checked");
                 const cb_receiving = $("#cb-receiving").is(":checked");
 
-                var obj = null;
-                var participants = 0
                 var text = "No data for Erasmus program year " + sliderStep.value() + "."
                 for (var i = 0; i < data.length; i++) {
                     if (data[i]["Country"] != name) continue;
-
-                    var obj = data[i];
-                    var index = -1;
-                    for (var j = 0; j < obj["Yearly-Data"].length; j++) {
-                        if (obj["Yearly-Data"][j]["Academic Year"].startsWith(sliderStep.value())) {
-                            index = j;
-                            break;
-                        }
-                    }
-                    if (index == -1) continue;
-
-                    if (cb_sending && cb_receiving && cb_female && cb_male) participants = obj["Yearly-Data"][index]["All-All"];
-                    else if (cb_sending && cb_receiving && cb_male) participants = obj["Yearly-Data"][index]["All-Male"];
-                    else if (cb_sending && cb_receiving & cb_female) participants = obj["Yearly-Data"][index]["All-Female"];
-                    else if (cb_receiving && cb_female && cb_male) participants = obj["Yearly-Data"][index]["Receiving-All"];
-                    else if (cb_sending && cb_female && cb_male) participants = obj["Yearly-Data"][index]["Sending-All"];
-                    else if (cb_sending && cb_female) participants = obj["Yearly-Data"][index]["Sending-Female"];
-                    else if (cb_sending && cb_male) participants = obj["Yearly-Data"][index]["Sending-Male"];
-                    else if (cb_receiving & cb_female) participants = obj["Yearly-Data"][index]["Receiving-Female"];
-                    else if (cb_receiving && cb_male) participants = obj["Yearly-Data"][index]["Receiving-Male"];
-                    const year = obj["Yearly-Data"][index]["Academic Year"];
+                    const participants = country_participants_values.get(data[i]["Country"]);
+                    const year = sliderStep.value() + "-" + (sliderStep.value() + 1);
                     const gender = (cb_female && cb_male) ? "Female, Male" : ((cb_female ? "Female" : (cb_male ? "Male" : "")))
                     const program = (cb_sending && cb_receiving) ? "Sending, Receiving" : ((cb_sending ? "Sending" : (cb_receiving ? "Receiving" : "")))
-                    text = "Academic Year: " + year + "<br>" + "Gender: " + gender + "<br>" + "Program Type: " + program + "<br>" + "Participants: " + participants;
+                    var education = document.getElementById('education-level').value
+                    if (education.startsWith("Not")) education = "Not classified"
+                    if (education.startsWith("Short")) education = "Short-Cycle"
+                    text = "Academic Year: " + year + "<br>" + "Gender: " + gender + "<br>" + "Program Type: " + program + "<br>" + "Education Level: " + education + "<br>" + "Participants: " + participants;
                 }
                 // todo: fix size of box
                 tooltip.html("Country: " + name + "<br>" + text)
@@ -181,26 +159,21 @@ function map(data) {
                 )
                 // set the color of each country
                 .attr("fill", function (d) {
-                    var maxCount = 0;
-                    var participants = 0;
+                    var maxCount = 0
+                    var country_participants = 0;
                     for (var i = 0; i < data.length; i++) {
-                        var obj = data[i];
-                        var index = -1;
+                        var obj = data[i]
+                        var participants = 0
                         for (var j = 0; j < obj["Yearly-Data"].length; j++) {
                             if (obj["Yearly-Data"][j]["Academic Year"].startsWith("2014")) {
-                                index = j;
-                                break;
+                                participants += obj["Yearly-Data"][j]["Sending"]
+                                participants += obj["Yearly-Data"][j]["Receiving"]
                             }
                         }
-                        if (index == -1) continue;
-
-                        if (obj["Yearly-Data"][index]["All-All"] > maxCount) maxCount = obj["Yearly-Data"][index]["All-All"];
-                        if (d.properties.name == obj["Country"]) {
-                            participants = obj["Yearly-Data"][index]["All-All"];
-                        }
+                        if (participants > maxCount) maxCount = participants;
+                        if (d.properties.name == obj["Country"]) country_participants = participants
                     }
-                    // return d3.interpolateRdBu(participants / maxCount);
-                    return d3.interpolateRdBu(0.5 + (participants / maxCount) / 2);
+                    return d3.interpolateRdBu(0.5 + (country_participants / maxCount) / 2);
                 })
                 .style("stroke", "transparent")
                 .attr("class", function (d) { return "Country" })

@@ -24,6 +24,7 @@ function chord(matrix, names) {
         const x = coordinates[0]
         const y = coordinates[1] + height / 2 - 10
         tooltip.style("top", (y + "px")).style("left", (x + "px")).transition()
+        tooltip.style("height", "auto")
     }
 
     function onMouseOverGroup(selected) {
@@ -72,12 +73,13 @@ function chord(matrix, names) {
             d.angle = (d.startAngle + d.endAngle) / 2;
         })
         .attr("dy", ".35em")
-        .attr("font-family", "Helvetica")
-        .attr("font-size", 15)
+        .attr("class", "label")
+        // .attr("font-family", "Helvetica")
+        // .attr("font-size", 15)
         .attr("fill", color)
         .attr("transform", d => `
         rotate(${(d.angle * 180 / Math.PI) - 90})
-        translate(${outerRadius + 26})
+        translate(${outerRadius + 10})
         ${d.angle > Math.PI ? "rotate(180)" : ""}
       `)
         .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)

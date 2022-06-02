@@ -4489,7 +4489,7 @@ img.u-pull-left {
     height: 0;
   font-family: monospace;
   visibility: hidden;
-  position: relative;
+  position: absolute;
   background-color: #333;
   border-radius: 4px;
   padding: 5px;

@@ -61,9 +61,16 @@ function create_bubble_chart(data) {
         .labelFormat(d3.format(".0f"));
     bubble_cloud.call(bubble_cloud_legend);
     // Size scale for countries
-    const size = d3.scaleLinear()
-        .domain([0, max_col * 1.2])
-        .range([6, 80])  // circle will be between 6 and 80 px wide
+    var size;
+    if (column_name === 'pagerank') {
+        size = d3.scaleLinear()
+            .domain([0, max_col * 1.4])
+            .range([6, 70]);
+    } else {
+        size = d3.scaleLinear()
+            .domain([0, max_col * 1.2])
+            .range([6, 80]);  // circle will be between 6 and 80 px wide
+    }
     // create a tooltip
     const Tooltip = d3.select("#bubble-cloud")
         .append("div")

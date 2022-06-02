@@ -15,6 +15,9 @@ d3.csv("data/viz4_enhanced.csv").then(function (data) {
     data = data.filter(function (d) {
         return d.outgoing > 3000
     })
+    let max_outgoing = d3.max(data, function (d) {
+        return d.outgoing
+    })
 
     // Color palette for regions?
     const bubble_cloud_color = d3.scaleOrdinal()
@@ -27,7 +30,7 @@ d3.csv("data/viz4_enhanced.csv").then(function (data) {
 
     // Size scale for countries
     const size = d3.scaleLinear()
-        .domain([0, 15000])
+        .domain([0, max_outgoing * 2])
         .range([6, 80])  // circle will be between 6 and 80 px wide
 
     // create a tooltip

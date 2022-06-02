@@ -171,11 +171,11 @@
                     <h1 class="text-display-title">Exploring Erasmus</h1>
 
                     <p class="lead">As team <span>Why Axis?</span> goals of our project are to visualize and provide
-                        insight into Erasmus educational mobility program with regard to the institutional, geographic,
-                        temporal, and demographic points of view. We explore the evolution of the program focusing on
+                        insight into the Erasmus educational mobility program concerning the institutional, geographic,
+                        temporal, and demographic points of view. We explore the program's evolution, focusing on
                         different demographic groups, geographic areas, education levels, and types of participation.
-                        Additionally, we investigate volume and collaboration between countries and their institutions,
-                        changes in exchanges popularity of programs in different education fields, and university
+                        Additionally, we investigate the volume and collaboration between countries and their institutions,
+                        changes in exchanges, the popularity of programs in different education fields, and university
                         significance to the program.
                     </p>
 
@@ -197,12 +197,12 @@
                             <h3 class="h4"><a href="#visualization-two" class="reversed">Erasmus Map</a></h3>
 
                             <p>
-                                The map shows the evolution of the Erasmus program in terms of geographic, temporal, and
-                                demographic points of view. The data is displayed per one program year, chosen from 2014
-                                to 2019. It is possible to see which (top 5) universities participated in the mobility
-                                programs of selected countries and the total number of participants for the country.
-                                Additionally, it is possible to filter and investigate participants' gender, type of
-                                exchange for a country (sending/receiving), and an academic year, i.e., education level.
+                                The map shows the evolution of the Erasmus program in terms of geographic, temporal, and 
+                                demographic points of view. The data is displayed per one program year, chosen from 2014 
+                                to 2019. Additionally, it is possible to filter and investigate participants' gender, 
+                                type of exchange for a country (sending/receiving), and education level. The world map 
+                                represents a heatmap corresponding to the number of program participants that conform to 
+                                specified filters.
                             </p>
                         </div>
 
@@ -314,23 +314,35 @@
                     <div class="visualization" data-animate-el>
                         <svg id="erasmus-map" width="800" height="600"></svg>
                     </div>
-                    <div class="row align-items-left" style="padding: 20px">Gender<br>
-                        <input type="checkbox" id="cb-female" name="female" value="Female" checked="true" style="padding: 20px">
-                        <label for="female">Female</label>
-                        <input type="checkbox" id="cb-male" name="male" value="Male" checked="true" style="padding: 20px">
-                        <label for="male">Male</label>
+                    <div class="row align-items-left">Gender:<br>
+                        <input type="checkbox" id="cb-female" name="female" value="Female" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
+                        <label for="female" style="margin: 10px">Female</label>
+                        <input type="checkbox" id="cb-male" name="male" value="Male" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
+                        <label for="male" style="margin: 10px">Male</label>
                     </div>
-                    <div class="row align-items-left">Program Type<br>
-                        <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true">
-                        <label for="sending">Sending</label>
-                        <input type="checkbox" id="cb-receiving" name="receiving" value="Receiving" checked="true">
-                        <label for="receiving">Receiving</label>
+                    <div class="row align-items-left">Program Type:<br>
+                        <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
+                        <label for="sending" style="margin: 10px">Sending</label>
+                        <input type="checkbox" id="cb-receiving" name="receiving" value="Receiving" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
+                        <label for="receiving" style="margin: 10px">Receiving</label>
                     </div>
-                    <h5>Academic Year</h5>
-                    <div class="row align-items-center">
-                        <div class="col-sm-2"><p id="value-step"></p></div>
+                    <div>
+                        <div class="row align-items-center">Academic Year:   
+                        <div class="col-sm-2" style="margin-right: 10; margin-left: 10px;"><p id="value-step"></p></div>
                         <div class="col-sm"><div id="slider-step"></div></div>
-                      </div>
+                    </div>
+                    <div class="row align-items-center" style="margin-right: 20px;">Education Level:
+                        <label for="education-level" style="margin-left: 20px;"></label>
+                        <select name="education-level" id="education-level">
+                        <option value="All">All levels</option>
+                        <option value="Bachelor">Bachelor’s or equivalent level (EQF-6)</option>
+                        <option value="Master">Master’s or equivalent level (EQF-7)</option>
+                        <option value="Doctoral">Doctoral or equivalent level (EQF-8)</option>
+                        <option value="Not">Not classified</option>
+                        <option value="Short">Short-cycle tertiary education (EQF-5)</option>
+                        </select>
+                    </div>
+                    <p style="color: black">The map shows the evolution of the Erasmus program per one academic year with the ability to filter on the following: participants' gender (marking the checkboxes), type of program (sending or receiving, also by marking the checkboxes), academic year (specifying desired year on the slider), and education level (choosing from the drop-down list). The world map is depicted as a heatmap of the number of program participants from the country, where programs satisfy the user-specified criteria. Countries' colors are interpolated from white to blue, correspond to program's participants from lowest to highest. Hence, the intensity of the blue represents the county's popularity in programs, while hovering over the country provides the exact details: country name, academic year, participant gender, program type, education level, and the number of participants.</p>
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
         </section>
@@ -403,14 +415,14 @@
 
                         <div class="testimonial-slider__slide swiper-slide">
                             <p>
-                                Nevena Dresevic
+                                Nevena Drešević
                             </p>
                             <div class="testimonial-slider__author">
                                 <img src="images/avatars/user-03.jpg" alt="Author image"
                                      class="testimonial-slider__avatar">
                                 <cite class="testimonial-slider__cite">
                                     <strong>Team Lead</strong>
-                                    <span>MSc Data Science, EPFL</span>
+                                    <span>MSc Computer Science, EPFL</span>
                                 </cite>
                             </div>
                         </div> <!-- end testimonial-slider__slide -->
@@ -424,7 +436,7 @@
                                      class="testimonial-slider__avatar">
                                 <cite class="testimonial-slider__cite">
                                     <strong>Data Preparation</strong>
-                                    <span>MSc Data Science, EPFL</span>
+                                    <span>MSc Computer Science, EPFL</span>
                                 </cite>
                             </div>
                         </div> <!-- end testimonial-slider__slide -->

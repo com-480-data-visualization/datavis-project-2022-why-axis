@@ -19,3 +19,11 @@
 Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
 
 ## Milestone 3
+
+Process Book:
+
+Screencast:
+
+Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
+
+## How To Use

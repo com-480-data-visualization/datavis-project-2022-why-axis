@@ -46,7 +46,7 @@ function create_bubble_chart(data) {
     })
     filteredData = data.filter(function (d) {
         if (column_name === 'pagerank') {
-            return d[column_name] > max_col / 3;
+            return d[column_name] > max_col / 2.2;
         } else if (column_name === 'betweenness') {
             return d[column_name] > max_col / 8;
         }
@@ -62,7 +62,7 @@ function create_bubble_chart(data) {
     bubble_cloud.call(bubble_cloud_legend);
     // Size scale for countries
     const size = d3.scaleLinear()
-        .domain([0, max_col * 1.5])
+        .domain([0, max_col * 1.2])
         .range([6, 80])  // circle will be between 6 and 80 px wide
     // create a tooltip
     const Tooltip = d3.select("#bubble-cloud")
@@ -75,33 +75,35 @@ function create_bubble_chart(data) {
             .style("opacity", 1)
     }
     const mousemove = function (event, d) {
-        Tooltip
-            .html('<h5>' + d.university + '</h5>' +
-                '<p>' + parseInt(d.total) + " total exchange students" + '</p>' +
-                '<p>' + parseInt(d.outgoing) + " outgoing exchange students" + '</p>' +
-                '<p>' + parseInt(d.incoming) + " incoming exchange students" + '</p>'
-            )
-            .style("left", (parseFloat(d3.select(this).attr("cx")) + width / 40) + "px")
-            .style("top", (parseFloat(d3.select(this).attr("cy") + height / 40)) + "px")
+        if (column_name === 'pagerank' || column_name === 'betweenness') {
+            Tooltip
+                .html('<h5>' + d.university + '</h5>' +
+                    '<p>' + parseFloat(d.pagerank).toFixed(4) + " pagerank" + '</p>' +
+                    '<p>' + parseFloat(d.betweenness).toFixed(4) + " betweenness" + '</p>'
+                )
+                .style("left", (parseFloat(d3.select(this).attr("cx")) + width / 40) + "px")
+                .style("top", (parseFloat(d3.select(this).attr("cy") + height / 40)) + "px")
+        } else {
+            Tooltip
+                .html('<h5>' + d.university + '</h5>' +
+                    '<p>' + parseInt(d.total) + " total exchange students" + '</p>' +
+                    '<p>' + parseInt(d.outgoing) + " outgoing exchange students" + '</p>' +
+                    '<p>' + parseInt(d.incoming) + " incoming exchange students" + '</p>'
+                )
+                .style("left", (parseFloat(d3.select(this).attr("cx")) + width / 40) + "px")
+                .style("top", (parseFloat(d3.select(this).attr("cy") + height / 40)) + "px")
+        }
     }
     var mouseleave = function (event, d) {
         Tooltip
             .style("opacity", 0)
     }
-    // Initialize the circle: all located at the center of the svg area
-    var node = bubble_cloud.append("g")
-        .selectAll("circle")
+
+    var node = bubble_cloud
+        .append("g")
+        .selectAll("g")
         .data(filteredData)
-        .join("circle")
-        .attr("class", "node")
-        .attr("r", d => size(d[column_name]))
-        .attr("r", d => size(d[column_name]))
-        .attr("cx", bubble_cloud_width / 2)
-        .attr("cy", bubble_cloud_height / 2)
-        .style("fill", d => bubble_cloud_color(d.country_unregion))
-        .style("fill-opacity", 0.8)
-        .attr("stroke", "black")
-        .style("stroke-width", 1)
+        .join("g")
         .on("mouseover", mouseover) // What to do when hovered
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
@@ -109,6 +111,28 @@ function create_bubble_chart(data) {
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
+
+    node.data(filteredData)
+        .append("circle")
+        .attr("class", "node")
+        .attr("r", d => size(d[column_name]))
+        .style("fill", d => bubble_cloud_color(d.country_unregion))
+        .style("fill-opacity", 0.8)
+        .attr("stroke", "black")
+        .style("stroke-width", 1)
+
+    node.append("text")
+        .data(filteredData)
+        .text( function (d) { return d.country_name })
+        .attr("style", d => {
+            var fontsize = size(d[column_name]);
+            var name_length = d.country_name.length;
+            return `
+            font-size: ${name_length < fontsize / 3.5 ? fontsize / 3 : fontsize / 4}px;
+            font-family: sans-serif;
+            text-anchor: middle;
+            white-space: pre-line;`})
+        .attr("fill", "white");
 
     // Features of the forces applied to the nodes:
     const simulation = d3.forceSimulation()
@@ -126,8 +150,10 @@ function create_bubble_chart(data) {
     simulation.force('x', d3.forceX().strength(0.02).x(width / 2))
     simulation.force('y', d3.forceY().strength(0.02).y(height / 2))
     simulation.restart();
+
     function ticked() {
         node
+            .attr("transform", d => `translate(${d.x},${d.y})`)
             .attr("cx", d => d.x)
             .attr("cy", d => d.y)
     }

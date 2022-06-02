@@ -140,10 +140,9 @@ function map(data) {
                     if (education.startsWith("Short")) education = "Short-Cycle"
                     text = "Academic Year: " + year + "<br>" + "Gender: " + gender + "<br>" + "Program Type: " + program + "<br>" + "Education Level: " + education + "<br>" + "Participants: " + participants;
                 }
-                // todo: fix size of box
                 tooltip.html("Country: " + name + "<br>" + text)
-                    .style("left", (d3.pointer(d)[0] - erasmus_map_width / 2) + "px")
-                    .style("top", (d3.pointer(d)[1]) + "px")
+                    .style("left", (window.innerWidth / 2 - 2 * erasmus_map_width / 3) + "px")
+                    .style("top", (erasmus_map_height / 4) + "px")
                     .transition()
             }
 

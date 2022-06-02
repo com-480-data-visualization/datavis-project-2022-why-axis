@@ -2165,6 +2165,19 @@ button.u-fullwidth {
     margin-right : 0;
 }
 
+.btn--tiny,
+button.btn--tiny {
+    --btn-height : calc(var(--vspace-btn) - 3.6rem);
+}
+
+.btn--tiny.active,
+button.btn--tiny.active {
+    background   : var(--color-btn-primary-hover);
+    border-color : var(--color-btn-primary-hover);
+    color        : var(--color-btn-primary-hover-text);
+}
+
+
 .btn--small,
 button.btn--small {
     --btn-height : calc(var(--vspace-btn) - 1.6rem);
@@ -4483,46 +4496,3 @@ img.u-pull-left {
         display : none;
     }
 }
-
-/*Tooltip for viz2*/
-#tooltip {
-    height: 0;
-  font-family: monospace;
-  visibility: hidden;
-  position: absolute;
-  background-color: #333;
-  border-radius: 4px;
-  padding: 5px;
-  z-index: 10;
-  color: white;
-  font-size: 12px;
-  display: inline-block;
-  border: 1px solid #ffffff;
-  opacity: 0.9;
-}
-
-.label {
-  font-family: "Lora", "Serif";
-  font-size: 15px;
-  text-rendering : optimizeLegibility;
-  color: white;
-}
-
-#tooltip-map {
-    font-family: monospace;
-    visibility: hidden;
-    position: absolute;
-    background-color: #333;
-    border-radius: 4px;
-    padding: 5px;
-    z-index: 10;
-    color: white;
-    font-size: 12px;
-    display: inline-block;
-    border: 1px solid #ffffff;
-    opacity: 0.9;
-  }
-
-  .checkboxes input {
-    vertical-align: middle;
-  }

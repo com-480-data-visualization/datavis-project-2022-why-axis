@@ -15,6 +15,7 @@
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 
     <!-- Load jQuery -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -378,9 +379,27 @@
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Universities Bubble Cloud</h2>
 
+                    <div id="bubble-cloud-toolbar">
+                        <div class="row justify-items-center">
+                            <div class="column lg-12">
+                                <button id="total" class="btn--tiny active">Total</button>
+                                <button id="outgoing" class="btn--tiny">Outgoing</button>
+                                <button id="incoming" class="btn--tiny">Incoming</button>
+                            </div>
+                        </div>
+                        <div class="row justify-items-center">
+                            <div class="column lg-12">
+                                <button id="pagerank" class="btn--tiny">Pagerank</button>
+                                <button id="betweenness" class="btn--tiny">Betweenness</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="visualization" data-animate-el>
                         <div id="bubble-cloud"></div>
                     </div>
+
+                    <p style="color: white">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
         </section>

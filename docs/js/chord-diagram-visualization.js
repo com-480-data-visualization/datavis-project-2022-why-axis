@@ -21,8 +21,8 @@ function chord(matrix, names) {
 
     function onMouseMove(selected) {
         var coordinates = d3.pointer(selected)
-        const x = coordinates[0]
-        const y = coordinates[1] + height / 2 - 10
+        const x = coordinates[0] + window.innerWidth / 2 
+        const y = coordinates[1] + height / 2 + 100
         tooltip.style("top", (y + "px")).style("left", (x + "px")).transition()
         tooltip.style("height", "auto")
     }

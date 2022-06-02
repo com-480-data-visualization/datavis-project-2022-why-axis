@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
-const bubble_cloud_width = 600
-const bubble_cloud_height = 600
+const bubble_cloud_width = document.getElementById('visualization-four').getElementsByClassName('column')[0].offsetWidth;
+const bubble_cloud_height = 800;
 
 // append the svg object to the body of the page
 const bubble_cloud = d3.select("#bubble-cloud")
@@ -13,29 +13,28 @@ d3.csv("data/viz4_enhanced.csv").then(function (data) {
 
     // Filter a bit the data -> more than 1 million inhabitants
     data = data.filter(function (d) {
-        return d.outgoing > 5000
+        return d.outgoing > 3000
     })
 
-    // Color palette for continents?
+    // Color palette for regions?
     const bubble_cloud_color = d3.scaleOrdinal()
         .domain(["Southern Europe", "Eastern Europe", "Western Europe", "Northern Europe", "Western Asia"])
         .range(d3.schemeSet1);
+    const bubble_cloud_legend = d3.legendColor()
+        .scale(bubble_cloud_color)
+        .labelFormat(d3.format(".0f"));
+    bubble_cloud.call(bubble_cloud_legend);
 
     // Size scale for countries
     const size = d3.scaleLinear()
         .domain([0, 15000])
-        .range([8, 90])  // circle will be between 7 and 55 px wide
+        .range([6, 80])  // circle will be between 6 and 80 px wide
 
     // create a tooltip
     const Tooltip = d3.select("#bubble-cloud")
         .append("div")
         .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
+        .attr("class", "bubble-cloud-tooltip")
 
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function (event, d) {
@@ -44,9 +43,10 @@ d3.csv("data/viz4_enhanced.csv").then(function (data) {
     }
     const mousemove = function (event, d) {
         Tooltip
-            .html('<u>' + d.university + '</u>' + "<br>" + d.outgoing + " outgoing students")
-            .style("left", (event.x / 2 + 20) + "px")
-            .style("top", (event.y / 2 - 30) + "px")
+            .html('<h5>' + d.university + '</h5>' +
+                  '<p>' + parseInt(d.outgoing) + " outgoing students" + '</p>')
+            .style("left", (parseFloat(d3.select(this).attr("cx")) + width/40) + "px")
+            .style("top", (parseFloat(d3.select(this).attr("cy") + height/40)) + "px")
     }
     var mouseleave = function (event, d) {
         Tooltip
@@ -91,7 +91,6 @@ d3.csv("data/viz4_enhanced.csv").then(function (data) {
                 .attr("cx", d => d.x)
                 .attr("cy", d => d.y)
         });
-
     // What happens when a circle is dragged?
     function dragstarted(event, d) {
         if (!event.active) simulation.alphaTarget(.03).restart();

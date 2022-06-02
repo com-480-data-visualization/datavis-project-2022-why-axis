@@ -9,23 +9,25 @@ const bubble_cloud = d3.select("#bubble-cloud")
     .attr("height", bubble_cloud_height)
 
 // Read data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/11_SevCatOneNumNestedOneObsPerGroup.csv").then( function(data) {
+d3.csv("data/viz4_enhanced.csv").then(function (data) {
 
     // Filter a bit the data -> more than 1 million inhabitants
-    data = data.filter(function(d){ return d.value>10000000 })
+    data = data.filter(function (d) {
+        return d.outgoing > 5000
+    })
 
     // Color palette for continents?
     const bubble_cloud_color = d3.scaleOrdinal()
-        .domain(["Asia", "Europe", "Africa", "Oceania", "Americas"])
+        .domain(["Southern Europe", "Eastern Europe", "Western Europe", "Northern Europe", "Western Asia"])
         .range(d3.schemeSet1);
 
     // Size scale for countries
     const size = d3.scaleLinear()
-        .domain([0, 1400000000])
-        .range([7,55])  // circle will be between 7 and 55 px wide
+        .domain([0, 15000])
+        .range([8, 90])  // circle will be between 7 and 55 px wide
 
     // create a tooltip
-    const Tooltip = d3.select("#my_dataviz")
+    const Tooltip = d3.select("#bubble-cloud")
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -36,17 +38,17 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .style("padding", "5px")
 
     // Three function that change the tooltip when user hover / move / leave a cell
-    const mouseover = function(event, d) {
+    const mouseover = function (event, d) {
         Tooltip
             .style("opacity", 1)
     }
-    const mousemove = function(event, d) {
+    const mousemove = function (event, d) {
         Tooltip
-            .html('<u>' + d.key + '</u>' + "<br>" + d.value + " inhabitants")
-            .style("left", (event.x/2+20) + "px")
-            .style("top", (event.y/2-30) + "px")
+            .html('<u>' + d.university + '</u>' + "<br>" + d.outgoing + " outgoing students")
+            .style("left", (event.x / 2 + 20) + "px")
+            .style("top", (event.y / 2 - 30) + "px")
     }
-    var mouseleave = function(event, d) {
+    var mouseleave = function (event, d) {
         Tooltip
             .style("opacity", 0)
     }
@@ -57,10 +59,10 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .data(data)
         .join("circle")
         .attr("class", "node")
-        .attr("r", d => size(d.value))
+        .attr("r", d => size(d.outgoing))
         .attr("cx", bubble_cloud_width / 2)
         .attr("cy", bubble_cloud_height / 2)
-        .style("fill", d => bubble_cloud_color(d.region))
+        .style("fill", d => bubble_cloud_color(d.country_unregion))
         .style("fill-opacity", 0.8)
         .attr("stroke", "black")
         .style("stroke-width", 1)
@@ -76,13 +78,15 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     const simulation = d3.forceSimulation()
         .force("center", d3.forceCenter().x(bubble_cloud_width / 2).y(bubble_cloud_height / 2)) // Attraction to the center of the svg area
         .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
-        .force("collide", d3.forceCollide().strength(.2).radius(function(d){ return (size(d.value)+3) }).iterations(1)) // Force that avoids circle overlapping
+        .force("collide", d3.forceCollide().strength(.2).radius(function (d) {
+            return (size(d.outgoing) + 3)
+        }).iterations(1)) // Force that avoids circle overlapping
 
     // Apply these forces to the nodes and update their positions.
     // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
     simulation
         .nodes(data)
-        .on("tick", function(d){
+        .on("tick", function (d) {
             node
                 .attr("cx", d => d.x)
                 .attr("cy", d => d.y)
@@ -94,10 +98,12 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         d.fx = d.x;
         d.fy = d.y;
     }
+
     function dragged(event, d) {
         d.fx = event.x;
         d.fy = event.y;
     }
+
     function dragended(event, d) {
         if (!event.active) simulation.alphaTarget(.03);
         d.fx = null;

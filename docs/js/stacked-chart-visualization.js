@@ -15,7 +15,6 @@ var svg = d3.select("#stacked-chart")
 // Parse the Data
 d3.csv("data/viz3.csv").then(function (data) {
 
-    console.log(data)
     //////////
     // GENERAL //
     //////////
@@ -47,7 +46,7 @@ d3.csv("data/viz3.csv").then(function (data) {
 
     var xAxis = svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).ticks(5).tickFormat(d => d + "/" + (d+1- 2000)))
+        .call(d3.axisBottom(x).ticks(5).tickFormat(d => d + "/" + (d + 1 - 2000)))
 
     // Add X axis label:
     svg.append("text")
@@ -69,8 +68,7 @@ d3.csv("data/viz3.csv").then(function (data) {
         .domain([0, 1])
         .range([height, 0]);
     svg.append("g")
-        .call(d3.axisLeft(y).ticks(5).tickFormat(d => parseFloat(100 * d).toFixed(2)+"%"))
-
+        .call(d3.axisLeft(y).ticks(5).tickFormat(d => parseFloat(100 * d).toFixed(2) + "%"))
 
 
     // Create the scatter variable: where both the circles and the brush take place
@@ -109,8 +107,6 @@ d3.csv("data/viz3.csv").then(function (data) {
 
     // What to do when one group is hovered
     var highlight = function (d) {
-        console.log(d)
-        console.log(this)
         // reduce opacity of all groups
         d3.selectAll(".myArea").style("opacity", .1)
         // expect the one that is hovered
@@ -158,7 +154,8 @@ d3.csv("data/viz3.csv").then(function (data) {
         .style("fill", function (d) {
             return color(d)
         })
-        .text(function (d) { return d
+        .text(function (d) {
+            return d
         })
         .attr("text-anchor", "left")
         .style("alignment-baseline", "middle")

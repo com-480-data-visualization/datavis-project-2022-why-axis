@@ -91,7 +91,6 @@ function map(data) {
         var coordinates = d3.pointer(event)
         const x = coordinates[0] + 80
         const y = coordinates[1] + 10
-        console.log(x,y)
 
         Tooltip
             .style("left", (parseFloat(x)) + "px")
@@ -165,9 +164,7 @@ function map(data) {
         .append('g')
         .attr('transform', 'translate(30,30)');
     gStep.call(sliderStep);
-    // d3.select('p#value-step').text(d3.format("d")(sliderStep.value()));
-    // document.getElementById('value-step').addEventListener('change', _ => console.log("prr"));
-    document.getElementById('slider-step').addEventListener('change', _ => console.log("prr"));
+    document.getElementById('slider-step').addEventListener('change', _ => _);
 
     // Load external data and boot
     Promise.all([

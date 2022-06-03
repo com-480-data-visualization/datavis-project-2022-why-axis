@@ -153,7 +153,7 @@ function map(data) {
         .step(1)
         .default(sliderData[0])
         .on('onchange', val => {
-            // d3.select('p#value-step').text(d3.format("d")(val));
+            d3.select('p#value-step').text(d3.format("d")(val));
             update_colors_and_values();
         });
     var gStep = d3
@@ -164,6 +164,8 @@ function map(data) {
         .append('g')
         .attr('transform', 'translate(30,30)');
     gStep.call(sliderStep);
+    d3.select('p#value-step').text(d3.format("d")(sliderStep.value()));
+    document.getElementById('value-step').addEventListener('change', _ => console.log("prr"));
     document.getElementById('slider-step').addEventListener('change', _ => _);
 
     // Load external data and boot

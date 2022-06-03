@@ -20,7 +20,7 @@ Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-a
 
 ## Milestone 3
 
-Process Book:
+[Process Book](https://github.com/com-480-data-visualization/datavis-project-2022-why-axis/blob/main/ProcessBook.pdf)
 
 Screencast: https://youtu.be/t7a9g44fBnk
 

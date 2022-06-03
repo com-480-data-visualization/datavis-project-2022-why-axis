@@ -27,4 +27,4 @@ Screencast:
 Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
 
 ## Dataset
-The data is available from [here](https://data.europa.eu/data/datasets/erasmus-mobility-statistics-2014-2019-v2?locale=en).
+The data is available on [data.europa.eu](https://data.europa.eu/data/datasets/erasmus-mobility-statistics-2014-2019-v2?locale=en).

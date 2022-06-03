@@ -22,7 +22,7 @@ Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-a
 
 Process Book:
 
-Screencast:
+Screencast: https://youtu.be/r6KgLYf4qvU
 
 Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
 

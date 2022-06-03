@@ -264,8 +264,8 @@
                             </h3>
 
                             <p>
-                                We use a bubble plot to explore which universities are in Erasmus mobility exchanges and
-                                how many participants. Each university is represented as a colored bubble, while the
+                                We use a bubble plot to explore which universities are most significant members of the Erasmus+ Programme.
+                                Each university is represented as a colored bubble, while the
                                 attribute chosen from a filter determines the size of the bubble. This attribute can be
                                 the number of outgoing or incoming participants, the total number of participants,
                                 pagerank, or university graph betweenness measure. All the data is calculated by summing
@@ -318,7 +318,7 @@
                     </div>
                     <div class="row">
                         <div class="gender-input-container column lg-6">
-                            <div class="row align-items-left">Gender:<br>
+                            <div class="row align-items-left">
                                 <article class="map-gender-female v-center">
                                     <input type="checkbox" id="cb-female" name="female" value="Female" checked="true">
                                     <div>
@@ -334,7 +334,7 @@
                             </div>
                         </div>
                         <div class="program-type-input-container column lg-6">
-                            <div class="row align-items-left">Program Type:<br>
+                            <div class="row align-items-left">
                                 <article class="map-program-type-sending v-center">
                                     <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true">
                                     <div>
@@ -350,21 +350,28 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="row align-items-center">Academic Year:   
-                        <div class="col-sm-2" style="margin-right: 10px; margin-left: 10px;"><p id="value-step"></p></div>
-                        <div class="col-sm"><div id="slider-step"></div></div>
-                    </div>
-                    <div class="row align-items-center" style="margin-right: 20px;">Education Level:
-                        <label for="education-level" style="margin-left: 20px;"></label>
-                        <select name="education-level" id="education-level">
-                        <option value="All">All levels</option>
-                        <option value="Bachelor">Bachelor’s or equivalent level (EQF-6)</option>
-                        <option value="Master">Master’s or equivalent level (EQF-7)</option>
-                        <option value="Doctoral">Doctoral or equivalent level (EQF-8)</option>
-                        <option value="Not">Not classified</option>
-                        <option value="Short">Short-cycle tertiary education (EQF-5)</option>
-                        </select>
+                    <div class="row">
+                        <div class="gender-input-container column lg-6">
+                            <div class="row align-items-center" style="margin-right: 20px;">
+    <!--                        <div class="col-sm-2" style="margin-right: 10px; margin-left: 10px;"><p id="value-step"></p></div>-->
+                                <div class="col-sm" style="margin-left: 20px">
+                                    <div id="slider-step"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gender-input-container column lg-6">
+                            <div class="row align-items-center" style="margin-right: 20px;">
+                                <label for="education-level" style="margin-left: 20px;"></label>
+                                <select name="education-level" id="education-level">
+                                <option value="All">All education levels</option>
+                                <option value="Bachelor">Bachelor’s or equivalent level (EQF-6)</option>
+                                <option value="Master">Master’s or equivalent level (EQF-7)</option>
+                                <option value="Doctoral">Doctoral or equivalent level (EQF-8)</option>
+                                <option value="Not">Not classified</option>
+                                <option value="Short">Short-cycle tertiary education (EQF-5)</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <p style="color: black">The map shows the evolution of the Erasmus program per one academic year with the ability to filter on the following: participants' gender (marking the checkboxes), type of program (sending or receiving, also by marking the checkboxes), academic year (specifying desired year on the slider), and education level (choosing from the drop-down list). The world map is depicted as a heatmap of the number of program participants from the country, where programs satisfy the user-specified criteria. Countries' colors are interpolated from white to blue, correspond to program's participants from lowest to highest. Hence, the intensity of the blue represents the county's popularity in programs, while hovering over the country provides the exact details: country name, academic year, participant gender, program type, education level, and the number of participants.</p>
                 </div> <!-- end column -->
@@ -381,7 +388,7 @@
                             <svg id="chord-diagram" width="900" height="900"></svg>
                         </div>
                     </div>
-                    <p style="color: white">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <p style="color: white">The diagram above allows for interactive exploration of the interdependencies between pairs of countries in terms of student exchanges. Hovering over the edges (ribbons) will display information about the number of students going between the two countries. Hovering over the circle cutouts (arcs) will display information about the total incoming/outgoing students for a country. Visualizing flows for all 34 countries was not possible - the number of edges was too large. We show the top 10 countries sorted based on the total number of participants (in and outgoing).
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
         </section>
@@ -394,8 +401,8 @@
                     <div class="visualization" data-animate-el>
                         <div id="stacked-chart"></div>
                     </div>
-                    <p style="color: black">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-
+                    <p style="color: black">The stacked area chart shows the evolution of popularity of education fields over time. On hover, it highlights the area corresponding to the selected section. The plot shows almost no trends or changes in the education field's popularity over time.
+                        It appears that the popularity of study fields in Europe is quite stable and the observed period is too short for us to spot any major shifts.
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
         </section>

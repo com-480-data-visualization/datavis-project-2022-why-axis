@@ -314,17 +314,39 @@
                     <div class="visualization" data-animate-el>
                         <svg id="erasmus-map" width="800" height="600"></svg>
                     </div>
-                    <div class="row align-items-left">Gender:<br>
-                        <input type="checkbox" id="cb-female" name="female" value="Female" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
-                        <label for="female" style="margin: 10px">Female</label>
-                        <input type="checkbox" id="cb-male" name="male" value="Male" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
-                        <label for="male" style="margin: 10px">Male</label>
-                    </div>
-                    <div class="row align-items-left">Program Type:<br>
-                        <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
-                        <label for="sending" style="margin: 10px">Sending</label>
-                        <input type="checkbox" id="cb-receiving" name="receiving" value="Receiving" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
-                        <label for="receiving" style="margin: 10px">Receiving</label>
+                    <div class="row">
+                        <div class="gender-input-container column lg-6">
+                            <div class="row align-items-left">Gender:<br>
+                                <article class="map-gender-female v-center">
+                                    <input type="checkbox" id="cb-female" name="female" value="Female" checked="true">
+                                    <div>
+                                        <span>Female</span>
+                                    </div>
+                                </article>
+                                <article class="map-gender-male v-center">
+                                    <input type="checkbox" id="cb-male" name="male" value="Male" checked="true">
+                                    <div>
+                                        <span>Male</span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="program-type-input-container column lg-6">
+                            <div class="row align-items-left">Program Type:<br>
+                                <article class="map-program-type-sending v-center">
+                                    <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true">
+                                    <div>
+                                        <span>Sending</span>
+                                    </div>
+                                </article>
+                                <article class="map-program-type-receiving v-center">
+                                    <input type="checkbox" id="cb-receiving" name="receiving" value="Receiving" checked="true">
+                                    <div>
+                                        <span>Receiving</span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <div class="row align-items-center">Academic Year:   

@@ -1,4 +1,8 @@
 function map(data) {
+    const chordArea = document.getElementById("erasmus-map")
+    const height = chordArea.getAttribute("height")
+    const width = chordArea.getAttribute("width")
+
     // The svg
     const erasmus_map_svg = d3.select("#erasmus-map"),
         erasmus_map_width = +erasmus_map_svg.attr("width"),
@@ -13,6 +17,13 @@ function map(data) {
     // Data and color scale
     const erasmus_map_data = new Map();
 
+    // tooltip
+    const Tooltip = d3.select("#map")
+        .append("div")
+        .attr("id", "map-tooltip")
+        .style("opacity", 0)
+        .attr("class", "map-tooltip")
+
     // Adding event listeners to checkbox-es and drop-down list of education level
     document.getElementById('cb-female').addEventListener('change', _ => update_colors_and_values());
     document.getElementById('cb-male').addEventListener('change', _ => update_colors_and_values());
@@ -22,6 +33,83 @@ function map(data) {
 
     // Global map where key is the country, value is participants count based on current selections
     var country_participants_values = new Map();
+
+    // Three function that change the tooltip when user hover / move / leave a cell
+    const mouseover = function (event, d) {
+        const name = d["properties"]["name"]
+        const cb_female = $("#cb-female").is(":checked");
+        const cb_male = $("#cb-male").is(":checked");
+        const cb_sending = $("#cb-sending").is(":checked");
+        const cb_receiving = $("#cb-receiving").is(":checked");
+        var participants;
+        var education;
+        var gender;
+        var program;
+        var year;
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i]["Country"] != name) continue;
+            participants = country_participants_values.get(data[i]["Country"]);
+            year = sliderStep.value() + "-" + (sliderStep.value() + 1);
+            gender = (cb_female && cb_male) ? "Female, Male" : ((cb_female ? "Female" : (cb_male ? "Male" : "")))
+            program = (cb_sending && cb_receiving) ? "Sending, Receiving" : ((cb_sending ? "Sending" : (cb_receiving ? "Receiving" : "")))
+            education = document.getElementById('education-level').value
+            if (education.startsWith("Not")) education = "Not classified"
+            if (education.startsWith("Short")) education = "Short-Cycle"
+            text = "Academic Year: " + year + "<br>" + "Gender: " + gender + "<br>" + "Program Type: " + program + "<br>" + "Education Level: " + education + "<br>" + "Participants: " + participants;
+        }
+
+        if (typeof participants === 'undefined') {
+            Tooltip.html('<h5>' + name + '</h5>' +
+            '<p>' + "No data available" + '</p>'
+            )
+            .style("opacity", 1)
+        } else {
+            Tooltip.html('<h5>' + name + '</h5>' +
+                '<p>' + "Academic year: " + year + '</p>' +
+                '<p>' + "Gender: " + gender + '</p>' +
+                '<p>' + "Program type: " + program + '</p>' +
+                '<p>' + "Education level: " + education + '</p>' +
+                '<p>' + "Participants: " + parseInt(participants) + '</p>'
+            )
+                .style("opacity", 1)
+        }
+
+        d3.selectAll(".Country")
+            .transition()
+            .duration(200)
+            .style("opacity", .5)
+        d3.select(this)
+            .transition()
+            .duration(200)
+            .style("opacity", 1)
+            .style("stroke", "black")
+    }
+
+    const mousemove = function (event, d) {
+        update_colors_and_values();
+        var coordinates = d3.pointer(event)
+        const x = coordinates[0] + 80
+        const y = coordinates[1] + 10
+        console.log(x,y)
+
+        Tooltip
+            .style("left", (parseFloat(x)) + "px")
+            .style("top", (parseFloat(y)) + "px")
+    }
+
+    var mouseleave = function (event, d) {
+        Tooltip
+            .style("opacity", 0)
+                        d3.selectAll(".Country")
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 1)
+        d3.select(this)
+            .transition()
+            .duration(200)
+            .style("stroke", "transparent")
+    }
 
     // Function that updates colors and participants nubmer for current selection of filters
     function update_colors_and_values() {
@@ -178,9 +266,9 @@ function map(data) {
                 .attr("class", function (d) { return "Country" })
                 .attr("country_name", function (d) { return d.properties.name })
                 .style("opacity", .8)
-                .on("mouseover", mouseOver)
-                .on("mouseleave", mouseLeave)
-                .on("mousemove", mouseMove)
+                .on("mouseover", mouseover)
+                .on("mouseleave", mouseleave)
+                .on("mousemove", mousemove)
         })
 }
 

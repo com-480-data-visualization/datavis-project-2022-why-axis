@@ -19,16 +19,18 @@
     vertical-align: middle;
 }
 
-.gender-input-container {
+.gender-input-container,
+.program-type-input-container,
+.map-education-level-col,
+.map-academic-year-slider {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.program-type-input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.map-academic-year-slider div p {
+    position: relative;
+    transform: translatey(+50%);
 }
 
 .v-center {

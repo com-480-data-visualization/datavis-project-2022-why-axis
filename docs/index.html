@@ -311,6 +311,12 @@
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Erasmus Map</h2>
                     <div id="tooltip-map"></div>
+                    <div class="map-academic-year-slider" data-animate-el>
+                        <div class="row">
+                            <div class="text-pretitle"><p id="value-step"></p></div>
+                            <div><div id="slider-step"></div></div>
+                        </div>
+                    </div>
                     <div class="visualization" data-animate-el>
                         <div id="map">
                             <svg id="erasmus-map" width="800" height="600"></svg>
@@ -318,7 +324,7 @@
                     </div>
                     <div class="row">
                         <div class="gender-input-container column lg-6">
-                            <div class="row align-items-left">Gender:<br>
+                            <div class="row align-items-left">
                                 <article class="map-gender-female v-center">
                                     <input type="checkbox" id="cb-female" name="female" value="Female" checked="true">
                                     <div>
@@ -334,7 +340,7 @@
                             </div>
                         </div>
                         <div class="program-type-input-container column lg-6">
-                            <div class="row align-items-left">Program Type:<br>
+                            <div class="row align-items-left">
                                 <article class="map-program-type-sending v-center">
                                     <input type="checkbox" id="cb-sending" name="sending" value="Sending" checked="true">
                                     <div>
@@ -350,23 +356,29 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="row align-items-center">Academic Year:   
-                        <div class="col-sm-2" style="margin-right: 10px; margin-left: 10px;"><p id="value-step"></p></div>
-                        <div class="col-sm"><div id="slider-step"></div></div>
+                    <div class="row align-items-center">
+                        <div class="column lg-12 map-education-level-col">
+                            <label for="education-level"></label>
+                            <select class="text-center" name="education-level" id="education-level">
+                                <option value="All">All education levels</option>
+                                <option value="Bachelor">Bachelor’s or equivalent level (EQF-6)</option>
+                                <option value="Master">Master’s or equivalent level (EQF-7)</option>
+                                <option value="Doctoral">Doctoral or equivalent level (EQF-8)</option>
+                                <option value="Not">Not classified</option>
+                                <option value="Short">Short-cycle tertiary education (EQF-5)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="row align-items-center" style="margin-right: 20px;">Education Level:
-                        <label for="education-level" style="margin-left: 20px;"></label>
-                        <select name="education-level" id="education-level">
-                        <option value="All">All levels</option>
-                        <option value="Bachelor">Bachelor’s or equivalent level (EQF-6)</option>
-                        <option value="Master">Master’s or equivalent level (EQF-7)</option>
-                        <option value="Doctoral">Doctoral or equivalent level (EQF-8)</option>
-                        <option value="Not">Not classified</option>
-                        <option value="Short">Short-cycle tertiary education (EQF-5)</option>
-                        </select>
-                    </div>
-                    <p style="color: black">The map shows the evolution of the Erasmus program per one academic year with the ability to filter on the following: participants' gender (marking the checkboxes), type of program (sending or receiving, also by marking the checkboxes), academic year (specifying desired year on the slider), and education level (choosing from the drop-down list). The world map is depicted as a heatmap of the number of program participants from the country, where programs satisfy the user-specified criteria. Countries' colors are interpolated from white to blue, correspond to program's participants from lowest to highest. Hence, the intensity of the blue represents the county's popularity in programs, while hovering over the country provides the exact details: country name, academic year, participant gender, program type, education level, and the number of participants.</p>
+                    <p style="color: black">The map shows the evolution of the Erasmus program per one academic year
+                        with the ability to filter on the following: participants' gender (marking the checkboxes),
+                        type of program (sending or receiving, also by marking the checkboxes), academic year (specifying
+                        desired year on the slider), and education level (choosing from the drop-down list). The world
+                        map is depicted as a heatmap of the number of program participants from the country, where
+                        programs satisfy the user-specified criteria. Countries' colors are interpolated from white to
+                        blue, correspond to program's participants from lowest to highest. Hence, the intensity of the
+                        blue represents the county's popularity in programs, while hovering over the country provides
+                        the exact details: country name, academic year, participant gender, program type, education
+                        level, and the number of participants.</p>
                 </div> <!-- end column -->
             </div> <!-- end row visualization -->
         </section>

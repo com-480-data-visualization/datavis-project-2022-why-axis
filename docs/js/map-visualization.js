@@ -160,7 +160,7 @@ function map(data) {
     var gStep = d3
         .select('div#slider-step')
         .append('svg')
-        .attr('width', 500)
+        .attr('width', 350)
         .attr('height', 100)
         .append('g')
         .attr('transform', 'translate(30,30)');

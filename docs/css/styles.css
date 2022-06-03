@@ -1929,10 +1929,13 @@ select {
     padding             : var(--input-vpadding) 0 calc(var(--input-vpadding) - 1px);
     border              : 0;
     outline             : 0;
-    color               : var(--color-text-light);
+    color               : var(--color-text);
     font-family         : var(--font-2);
     font-size           : var(--text-sm);
+    font-weight         : bold;
     line-height         : var(--input-line-height);
+    letter-spacing      : .15em;
+    text-transform      : capitalize;
     max-width           : 100%;
     background          : transparent;
     border-bottom       : 1px solid var(--color-border);

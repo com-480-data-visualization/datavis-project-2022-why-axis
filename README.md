@@ -26,4 +26,31 @@ Screencast:
 
 Website: https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/
 
-## How To Use
+## Dataset
+The data is available on [data.europa.eu](https://data.europa.eu/data/datasets/erasmus-mobility-statistics-2014-2019-v2?locale=en).
+
+## Instructions on Cloning the Website
+The website is hosted on GitHub pages and is accessible via [this](https://com-480-data-visualization.github.io/datavis-project-2022-why-axis/) link.
+If you would like to work on the source, the website is stored in the `docs` directory within this repository and the steps to run your server locally are as follows:
+- Clone the repo
+
+  `git clone git@github.com:com-480-data-visualization/datavis-project-2022-why-axis.git`
+- Change directory into `docs` folder
+
+  `cd datavis-project-2022-why-axis/docs`
+- Start the webserver either by running `python -m http-server` or by using VSCode/IntelliJ respective extensions for starting webservers
+- Visit the website at `localhost:8000`
+  - Keep in mind that the port is subject to change depending on the extension
+
+The folder structure of the website is as follows:
+```
+docs
+├── css (Stylesheets)
+├── data (Data used in visualizations)
+├── images (Images used in the website)
+├── js (JavaScript files of the website and visualizations)
+├── *.png (Icons for respective devices)
+├── favicon.ico (Favicon of the websites)
+├── index.html (The one-pager entry template)
+└── site.webmanifest (Web manifest)
+```

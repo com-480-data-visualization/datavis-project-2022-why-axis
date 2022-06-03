@@ -39,7 +39,7 @@
 
 article {
     position: relative;
-    width: 120px;
+    width: 160px;
     height: 30px;
     margin: 5px;
     float: left;
@@ -59,7 +59,7 @@ article div {
 
 article input {
     position: absolute;
-    width: 120px;
+    width: 160px;
     height: 30px;
     top: 0;
     left: 0;
@@ -72,6 +72,7 @@ article span {
     font-weight: 500;
     font-size: var(--text-xs);
     text-transform: uppercase;
+    letter-spacing: .35em;
 }
 
 input[type=checkbox]:checked ~ div {

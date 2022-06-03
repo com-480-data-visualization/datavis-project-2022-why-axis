@@ -5,45 +5,59 @@ function chord(matrix, names) {
     const outerRadius = 350
 
     // mouse events adapted from https://observablehq.com/@john-guerra/mouseover-chord-diagram
+    // create a tooltip
+    const Tooltip = d3.select("#chord")
+        .append("div")
+        .attr("id", "chord-tooltip")
+        .style("opacity", 0)
+        .attr("class", "chord-diagram-tooltip")
 
-    function onMouseOverPath(selected) {
-        const indexFrom = selected.path[0].__data__["source"]["index"]
-        const indexTo = selected.path[0].__data__["target"]["index"]
-        const value = selected.path[0].__data__["source"]["value"]
+    // functions that change the tooltip when user hover / move / leave a cell
+    const mouseoverArc = function (event, d) {
+        const index = d.index
+        const out = d3.sum(matrix[index])
+        const in_ = d3.sum(matrix, row => row[index])
+        Tooltip.html('<h5>' + names[d.index] + '</h5>' +
+            '<p>' + parseInt(out + in_) + " total exchange students" + '</p>' +
+            '<p>' + parseInt(out) + " outgoing exchange students" + '</p>' +
+            '<p>' + parseInt(in_) + " incoming exchange students" + '</p>'
+            )
+            .style("opacity", 1)
 
         svg.selectAll(".chordpath")
-            .filter(d => d.source.index !== indexFrom).transition().style("opacity", 0.3);
-
-        tooltip.text(`${names[indexFrom]} to ${names[indexTo]}: ${value} students`)
-
-        tooltip.style("visibility", "visible");
-    }
-
-    function onMouseMove(selected) {
-        var coordinates = d3.pointer(selected)
-        const x = coordinates[0] + window.innerWidth / 2 
-        const y = coordinates[1] + height / 2 + 100
-        tooltip.style("top", (y + "px")).style("left", (x + "px")).transition()
-        tooltip.style("height", "auto")
-    }
-
-    function onMouseOverGroup(selected) {
-        // i don't know what's a better way to get that index?
-        const index = selected.path[0].__data__['index']
-        svg.selectAll(".chordpath")
-            .filter(d => d.source.index !== index).transition()
+            .filter(d_ => d_.source.index !== d.index).transition()
             .style("opacity", 0.3);
-
-        tooltip.text(`${names[index]}: out: ${d3.sum(matrix[index])}, in: ${d3.sum(matrix, row => row[index])}`)
-        tooltip.style("visibility", "visible");
     }
 
-    function onMouseOut() {
+    const mouseoverRibbon = function (event, d) {
+        const val = matrix[d.source.index][d.target.index]
+        Tooltip
+            .html('<h5>' + names[d.source.index] + " -> " + names[d.target.index] + '</h5>' +
+                '<p>' + parseInt(val) + " total students" + '</p>'
+            )
+            .style("opacity", 1)
+
+        svg.selectAll(".chordpath")
+            .filter(d_ => d_.source.index !== d.source.index).transition()
+            .style("opacity", 0.3);
+    }
+
+    const mousemove = function (event, d) {
+        var coordinates = d3.pointer(event)
+        const x = coordinates[0] + width / 2 + 20
+        const y = coordinates[1] + height / 2 + 20
+
+        Tooltip
+            .style("left", (parseFloat(x)) + "px")
+            .style("top", (parseFloat(y)) + "px")
+    }
+
+    var mouseleave = function (event, d) {
+        Tooltip
+            .style("opacity", 0)
         svg.selectAll(".chordpath").transition()
             .style("opacity", 1);
-        tooltip.style("visibility", "hidden");
     }
-
 
     const chordArea = document.getElementById("chord-diagram")
     const height = chordArea.getAttribute("height")
@@ -92,9 +106,9 @@ function chord(matrix, names) {
         .data(chords)
         .join("path")
         .attr("d", ribbon)
-        .on("mouseover", onMouseOverPath)
-        .on("mouseout", onMouseOut)
-        .on("mousemove", onMouseMove)
+        .on("mouseover", mouseoverRibbon)
+        .on("mouseleave", mouseleave)
+        .on("mousemove", mousemove)
         .attr("class", "chordpath")
         .attr("fill", d => color(names[d.source.index]))
         .style("mix-blend-mode", "multiply")
@@ -103,9 +117,9 @@ function chord(matrix, names) {
         .attr("fill", d => color(names[d.index]))
         .attr("stroke", "#fff")
         .attr("d", arc)
-        .on("mouseover", onMouseOverGroup)
-        .on("mouseout", onMouseOut)
-        .on("mousemove", onMouseMove)
+        .on("mouseover", mouseoverArc)
+        .on("mouseleave", mouseleave)
+        .on("mousemove", mousemove)
 }
 
 const json_path = "data/viz2.json"

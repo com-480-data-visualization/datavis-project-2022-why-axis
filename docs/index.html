@@ -312,7 +312,9 @@
                     <h2 class="text-pretitle" data-animate-el>Erasmus Map</h2>
                     <div id="tooltip-map"></div>
                     <div class="visualization" data-animate-el>
-                        <svg id="erasmus-map" width="800" height="600"></svg>
+                        <div id="map">
+                            <svg id="erasmus-map" width="800" height="600"></svg>
+                        </div>
                     </div>
                     <div class="row align-items-left">Gender:<br>
                         <input type="checkbox" id="cb-female" name="female" value="Female" checked="true" style="margin-right: 5; margin-left: 5px; margin-top: 10px;">
@@ -328,7 +330,7 @@
                     </div>
                     <div>
                         <div class="row align-items-center">Academic Year:   
-                        <div class="col-sm-2" style="margin-right: 10; margin-left: 10px;"><p id="value-step"></p></div>
+                        <div class="col-sm-2" style="margin-right: 10px; margin-left: 10px;"><p id="value-step"></p></div>
                         <div class="col-sm"><div id="slider-step"></div></div>
                     </div>
                     <div class="row align-items-center" style="margin-right: 20px;">Education Level:
@@ -351,9 +353,11 @@
             <div class="row visualizations__dark">
                 <div class="column lg-12" data-animate-block>
                     <h2 class="text-pretitle" data-animate-el>Country Relationship Diagram</h2>
-                    <div id=tooltip></div>
+<!--                    <div id=tooltip></div>-->
                     <div class="visualization" data-animate-el>
-                        <svg id="chord-diagram" width="900" height="900"></svg>
+                        <div id="chord">
+                            <svg id="chord-diagram" width="900" height="900"></svg>
+                        </div>
                     </div>
                     <p style="color: white">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                 </div> <!-- end column -->
